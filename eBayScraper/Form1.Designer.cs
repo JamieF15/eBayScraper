@@ -29,22 +29,24 @@ namespace eBayScraper
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.searchBx = new System.Windows.Forms.TextBox();
             this.resultsBx = new System.Windows.Forms.TextBox();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.helpPicbx = new System.Windows.Forms.PictureBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.goBtn = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).BeginInit();
             this.SuspendLayout();
             // 
             // searchBx
             // 
-            this.searchBx.Location = new System.Drawing.Point(152, 12);
+            this.searchBx.Location = new System.Drawing.Point(153, 12);
             this.searchBx.Name = "searchBx";
             this.searchBx.Size = new System.Drawing.Size(489, 23);
-            this.searchBx.TabIndex = 0;
+            this.searchBx.TabIndex = 1;
+            this.searchBx.Click += new System.EventHandler(this.searchBx_Click);
+            this.searchBx.Leave += new System.EventHandler(this.searchBx_Leave);
             // 
             // resultsBx
             // 
@@ -53,23 +55,19 @@ namespace eBayScraper
             this.resultsBx.Multiline = true;
             this.resultsBx.Name = "resultsBx";
             this.resultsBx.ReadOnly = true;
+            this.resultsBx.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.resultsBx.Size = new System.Drawing.Size(630, 168);
             this.resultsBx.TabIndex = 1;
             // 
-            // vScrollBar1
+            // helpPicbx
             // 
-            this.vScrollBar1.Location = new System.Drawing.Point(717, 155);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(17, 168);
-            this.vScrollBar1.TabIndex = 2;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(717, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(80, 76);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.helpPicbx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.helpPicbx.Image = ((System.Drawing.Image)(resources.GetObject("helpPicbx.Image")));
+            this.helpPicbx.Location = new System.Drawing.Point(717, 12);
+            this.helpPicbx.Name = "helpPicbx";
+            this.helpPicbx.Size = new System.Drawing.Size(80, 76);
+            this.helpPicbx.TabIndex = 3;
+            this.helpPicbx.TabStop = false;
             // 
             // textBox3
             // 
@@ -92,7 +90,7 @@ namespace eBayScraper
             this.goBtn.Location = new System.Drawing.Point(332, 41);
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(127, 25);
-            this.goBtn.TabIndex = 6;
+            this.goBtn.TabIndex = 0;
             this.goBtn.Text = "SCAPE";
             this.goBtn.UseVisualStyleBackColor = true;
             this.goBtn.Click += new System.EventHandler(this.goBtn_Click);
@@ -106,13 +104,12 @@ namespace eBayScraper
             this.Controls.Add(this.goBtn);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.vScrollBar1);
+            this.Controls.Add(this.helpPicbx);
             this.Controls.Add(this.resultsBx);
             this.Controls.Add(this.searchBx);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,8 +119,7 @@ namespace eBayScraper
 
         private System.Windows.Forms.TextBox searchBx;
         private System.Windows.Forms.TextBox resultsBx;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox helpPicbx;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button goBtn;
