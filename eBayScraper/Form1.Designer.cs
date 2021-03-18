@@ -41,7 +41,7 @@ namespace eBayScraper
             // 
             // searchBx
             // 
-            this.searchBx.Location = new System.Drawing.Point(153, 12);
+            this.searchBx.Location = new System.Drawing.Point(150, 12);
             this.searchBx.Name = "searchBx";
             this.searchBx.Size = new System.Drawing.Size(489, 23);
             this.searchBx.TabIndex = 1;
@@ -61,8 +61,8 @@ namespace eBayScraper
             // 
             // helpPicbx
             // 
+            this.helpPicbx.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("helpPicbx.BackgroundImage")));
             this.helpPicbx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.helpPicbx.Image = ((System.Drawing.Image)(resources.GetObject("helpPicbx.Image")));
             this.helpPicbx.Location = new System.Drawing.Point(717, 12);
             this.helpPicbx.Name = "helpPicbx";
             this.helpPicbx.Size = new System.Drawing.Size(80, 76);
@@ -74,8 +74,10 @@ namespace eBayScraper
             this.textBox3.Location = new System.Drawing.Point(84, 123);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(100, 33);
             this.textBox3.TabIndex = 4;
+            this.textBox3.Text = "ID";
             // 
             // textBox4
             // 
@@ -118,11 +120,11 @@ namespace eBayScraper
         #endregion
 
         private System.Windows.Forms.TextBox searchBx;
-        private System.Windows.Forms.TextBox resultsBx;
         private System.Windows.Forms.PictureBox helpPicbx;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button goBtn;
+        public System.Windows.Forms.TextBox resultsBx;
     }
 }
 

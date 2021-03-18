@@ -20,3 +20,25 @@ C:\Users\User\Desktop\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScrape
 C:\Users\User\Desktop\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.dll
 C:\Users\User\Desktop\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.pdb
 C:\Users\User\Desktop\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.genruntimeconfig.cache
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.exe
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.dll.config
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.deps.json
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.runtimeconfig.json
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.runtimeconfig.dev.json
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.dll
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\eBayScraper.pdb
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\HtmlAgilityPack.dll
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\System.Net.Http.Extensions.dll
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\bin\Debug\netcoreapp3.1\System.Net.Http.Primitives.dll
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.csprojAssemblyReference.cache
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.dll.config
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.Form1.resources
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.Properties.Resources.resources
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.csproj.GenerateResource.cache
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.AssemblyInfo.cs
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.csproj.CopyComplete
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.dll
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.pdb
+C:\Users\User\Desktop\new ebay scraper\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.genruntimeconfig.cache

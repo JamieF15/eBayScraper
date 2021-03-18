@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "C3Vvc7hXq+gYSobQ1byFBbiSKGYMSY2KlCZtkdTkyzNhMj/60QnQWeK5bsXZIX9XvJk6Nghr3TKO+EtGD9igbw==",
+  "dgSpecHash": "G+rVJ0OzwiV+3H+niftiTUS6Tl1pQNoYbBDUnjlkvNndyrT9tR9SFj18tprf2e4L842I9/UXYGCJyIVx50w0QA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\eBayScraper\\eBayScraper\\eBayScraper.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\new ebay scraper\\eBayScraper\\eBayScraper\\eBayScraper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\htmlagilitypack\\1.11.31\\htmlagilitypack.1.11.31.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.bcl\\1.1.10\\microsoft.bcl.1.1.10.nupkg.sha512",
