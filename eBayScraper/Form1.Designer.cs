@@ -56,7 +56,7 @@ namespace eBayScraper
             this.resultsBx.Name = "resultsBx";
             this.resultsBx.ReadOnly = true;
             this.resultsBx.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.resultsBx.Size = new System.Drawing.Size(630, 168);
+            this.resultsBx.Size = new System.Drawing.Size(630, 354);
             this.resultsBx.TabIndex = 1;
             // 
             // helpPicbx
@@ -93,7 +93,7 @@ namespace eBayScraper
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(127, 25);
             this.goBtn.TabIndex = 0;
-            this.goBtn.Text = "SCAPE";
+            this.goBtn.Text = "SEARCH";
             this.goBtn.UseVisualStyleBackColor = true;
             this.goBtn.Click += new System.EventHandler(this.goBtn_Click);
             // 
@@ -102,7 +102,7 @@ namespace eBayScraper
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(813, 343);
+            this.ClientSize = new System.Drawing.Size(813, 521);
             this.Controls.Add(this.goBtn);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
