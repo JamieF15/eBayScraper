@@ -23,23 +23,44 @@ namespace eBayScraper
             searchBx.Text = URLPROMPT;
         }
 
-        public void GetHTTP()
+        public async void GetHTML()
         {
             if (URLIsValid(url))
             {
                 HttpClient httpClient = new HttpClient();
-                var html = httpClient.GetStringAsync(url);
-                if (!html.IsCompleted)
-                {
-                    resultsBx.Text = "SCAPING IN PROGESS...";
 
-                    if (html.IsCompleted)
-                    {
-                        return;
-                    }
-                }
+                string html = await httpClient.GetStringAsync(url);
 
-                resultsBx.Text = html.Result.ToString();
+                var htmldocument = new HtmlAgilityPack.HtmlDocument();
+
+                htmldocument.LoadHtml(html);
+
+                var products = htmldocument.DocumentNode.Descendants("ul").
+                    Where(node => node.GetAttributeValue("id", "").
+                    Equals("ListViewInner")).ToList();
+
+                var productListItems = products[0].Descendants("li")
+                    .Where(node => node.GetAttributeValue("id", "")
+                    .Contains("item")).ToList();
+
+                resultsBx.Text = productListItems.Count.ToString();
+
+                var productList = products[0].Descendants();
+
+                //https://www.ebay.co.uk/sch/i.html?_from=R40&_nkw=pc&_in_kw=1&_ex_kw=&_sacat=0&_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=Cb12aw&_sargn=-1%26saslc%3D1&_salic=3&_sop=12&_dmd=1&_ipg=100&_fosrp=1
+
+                //if (()html.IsCompleted)
+                //{
+                //    resultsBx.Text = "SCRAPING IN PROGESS...";
+
+                //    if (html.IsCompleted)
+                //    {
+                //        return;
+                //    }
+                //}
+
+                //resultsBx.Text = html.Result.ToString();
+
             }
             else
             {
@@ -57,7 +78,7 @@ namespace eBayScraper
             }
             else
             {
-                GetHTTP();
+                GetHTML();
             }
         }
 

@@ -286,11 +286,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\new ebay scraper\\eBayScraper\\eBayScraper\\eBayScraper.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\New folder (3)\\eBayScraper\\eBayScraper\\eBayScraper.csproj",
       "projectName": "eBayScraper",
-      "projectPath": "C:\\Users\\User\\Desktop\\new ebay scraper\\eBayScraper\\eBayScraper\\eBayScraper.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\New folder (3)\\eBayScraper\\eBayScraper\\eBayScraper.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\new ebay scraper\\eBayScraper\\eBayScraper\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\New folder (3)\\eBayScraper\\eBayScraper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
