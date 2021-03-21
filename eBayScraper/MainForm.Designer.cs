@@ -1,7 +1,7 @@
 ﻿
 namespace eBayScraper
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,14 +29,17 @@ namespace eBayScraper
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.searchBx = new System.Windows.Forms.TextBox();
             this.resultsBx = new System.Windows.Forms.TextBox();
             this.helpPicbx = new System.Windows.Forms.PictureBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.goBtn = new System.Windows.Forms.Button();
+            this.statustxtbx = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkboxpnl = new System.Windows.Forms.Panel();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).BeginInit();
+            this.checkboxpnl.SuspendLayout();
             this.SuspendLayout();
             // 
             // searchBx
@@ -51,12 +54,12 @@ namespace eBayScraper
             // resultsBx
             // 
             this.resultsBx.BackColor = System.Drawing.Color.White;
-            this.resultsBx.Location = new System.Drawing.Point(84, 155);
+            this.resultsBx.Location = new System.Drawing.Point(84, 114);
             this.resultsBx.Multiline = true;
             this.resultsBx.Name = "resultsBx";
             this.resultsBx.ReadOnly = true;
             this.resultsBx.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.resultsBx.Size = new System.Drawing.Size(630, 354);
+            this.resultsBx.Size = new System.Drawing.Size(565, 395);
             this.resultsBx.TabIndex = 1;
             // 
             // helpPicbx
@@ -69,24 +72,6 @@ namespace eBayScraper
             this.helpPicbx.TabIndex = 3;
             this.helpPicbx.TabStop = false;
             // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(84, 123);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(100, 33);
-            this.textBox3.TabIndex = 4;
-            this.textBox3.Text = "ID";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(190, 123);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 33);
-            this.textBox4.TabIndex = 5;
-            // 
             // goBtn
             // 
             this.goBtn.Location = new System.Drawing.Point(332, 41);
@@ -97,21 +82,64 @@ namespace eBayScraper
             this.goBtn.UseVisualStyleBackColor = true;
             this.goBtn.Click += new System.EventHandler(this.goBtn_Click);
             // 
-            // Form1
+            // statustxtbx
+            // 
+            this.statustxtbx.Location = new System.Drawing.Point(84, 85);
+            this.statustxtbx.Name = "statustxtbx";
+            this.statustxtbx.ReadOnly = true;
+            this.statustxtbx.Size = new System.Drawing.Size(221, 23);
+            this.statustxtbx.TabIndex = 4;
+            this.statustxtbx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(18, 13);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(96, 19);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "Auction Only";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkboxpnl
+            // 
+            this.checkboxpnl.BackColor = System.Drawing.Color.White;
+            this.checkboxpnl.Controls.Add(this.checkBox2);
+            this.checkboxpnl.Controls.Add(this.checkBox1);
+            this.checkboxpnl.Location = new System.Drawing.Point(679, 114);
+            this.checkboxpnl.Name = "checkboxpnl";
+            this.checkboxpnl.Size = new System.Drawing.Size(134, 157);
+            this.checkboxpnl.TabIndex = 6;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(18, 38);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(83, 19);
+            this.checkBox2.TabIndex = 6;
+            this.checkBox2.Text = "checkBox2";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(813, 521);
+            this.ClientSize = new System.Drawing.Size(825, 521);
+            this.Controls.Add(this.checkboxpnl);
+            this.Controls.Add(this.statustxtbx);
             this.Controls.Add(this.goBtn);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.helpPicbx);
             this.Controls.Add(this.resultsBx);
             this.Controls.Add(this.searchBx);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainForm";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "eBay Scraper";
             ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).EndInit();
+            this.checkboxpnl.ResumeLayout(false);
+            this.checkboxpnl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,10 +149,12 @@ namespace eBayScraper
 
         private System.Windows.Forms.TextBox searchBx;
         private System.Windows.Forms.PictureBox helpPicbx;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button goBtn;
         public System.Windows.Forms.TextBox resultsBx;
+        private System.Windows.Forms.TextBox statustxtbx;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Panel checkboxpnl;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 
