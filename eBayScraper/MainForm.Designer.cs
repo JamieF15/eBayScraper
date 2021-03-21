@@ -35,9 +35,11 @@ namespace eBayScraper
             this.helpPicbx = new System.Windows.Forms.PictureBox();
             this.goBtn = new System.Windows.Forms.Button();
             this.statustxtbx = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkboxpnl = new System.Windows.Forms.Panel();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.auctionAndBuyrb = new System.Windows.Forms.RadioButton();
+            this.buyNowOnlyrb = new System.Windows.Forms.RadioButton();
+            this.auctionOnlyrb = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).BeginInit();
             this.checkboxpnl.SuspendLayout();
             this.SuspendLayout();
@@ -71,6 +73,7 @@ namespace eBayScraper
             this.helpPicbx.Size = new System.Drawing.Size(80, 76);
             this.helpPicbx.TabIndex = 3;
             this.helpPicbx.TabStop = false;
+            this.helpPicbx.Click += new System.EventHandler(this.helpPicbx_Click);
             // 
             // goBtn
             // 
@@ -91,42 +94,67 @@ namespace eBayScraper
             this.statustxtbx.TabIndex = 4;
             this.statustxtbx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(18, 13);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 19);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "Auction Only";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // checkboxpnl
             // 
             this.checkboxpnl.BackColor = System.Drawing.Color.White;
-            this.checkboxpnl.Controls.Add(this.checkBox2);
-            this.checkboxpnl.Controls.Add(this.checkBox1);
-            this.checkboxpnl.Location = new System.Drawing.Point(679, 114);
+            this.checkboxpnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.checkboxpnl.Controls.Add(this.label1);
+            this.checkboxpnl.Controls.Add(this.auctionAndBuyrb);
+            this.checkboxpnl.Controls.Add(this.buyNowOnlyrb);
+            this.checkboxpnl.Controls.Add(this.auctionOnlyrb);
+            this.checkboxpnl.Location = new System.Drawing.Point(660, 114);
             this.checkboxpnl.Name = "checkboxpnl";
-            this.checkboxpnl.Size = new System.Drawing.Size(134, 157);
+            this.checkboxpnl.Size = new System.Drawing.Size(162, 106);
             this.checkboxpnl.TabIndex = 6;
             // 
-            // checkBox2
+            // label1
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(18, 38);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(83, 19);
-            this.checkBox2.TabIndex = 6;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(15, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(130, 15);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Filter by Buying Format";
+            // 
+            // auctionAndBuyrb
+            // 
+            this.auctionAndBuyrb.AutoSize = true;
+            this.auctionAndBuyrb.Checked = true;
+            this.auctionAndBuyrb.Location = new System.Drawing.Point(5, 26);
+            this.auctionAndBuyrb.Name = "auctionAndBuyrb";
+            this.auctionAndBuyrb.Size = new System.Drawing.Size(151, 19);
+            this.auctionAndBuyrb.TabIndex = 9;
+            this.auctionAndBuyrb.TabStop = true;
+            this.auctionAndBuyrb.Text = "Auction and Buy It Now";
+            this.auctionAndBuyrb.UseVisualStyleBackColor = true;
+            // 
+            // buyNowOnlyrb
+            // 
+            this.buyNowOnlyrb.AutoSize = true;
+            this.buyNowOnlyrb.Location = new System.Drawing.Point(5, 76);
+            this.buyNowOnlyrb.Name = "buyNowOnlyrb";
+            this.buyNowOnlyrb.Size = new System.Drawing.Size(101, 19);
+            this.buyNowOnlyrb.TabIndex = 8;
+            this.buyNowOnlyrb.Text = "Buy Now Only";
+            this.buyNowOnlyrb.UseVisualStyleBackColor = true;
+            // 
+            // auctionOnlyrb
+            // 
+            this.auctionOnlyrb.AutoSize = true;
+            this.auctionOnlyrb.Location = new System.Drawing.Point(5, 51);
+            this.auctionOnlyrb.Name = "auctionOnlyrb";
+            this.auctionOnlyrb.Size = new System.Drawing.Size(95, 19);
+            this.auctionOnlyrb.TabIndex = 7;
+            this.auctionOnlyrb.Text = "Auction Only";
+            this.auctionOnlyrb.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(825, 521);
+            this.ClientSize = new System.Drawing.Size(834, 521);
             this.Controls.Add(this.checkboxpnl);
             this.Controls.Add(this.statustxtbx);
             this.Controls.Add(this.goBtn);
@@ -152,9 +180,11 @@ namespace eBayScraper
         private System.Windows.Forms.Button goBtn;
         public System.Windows.Forms.TextBox resultsBx;
         private System.Windows.Forms.TextBox statustxtbx;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel checkboxpnl;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.RadioButton auctionOnlyrb;
+        private System.Windows.Forms.RadioButton buyNowOnlyrb;
+        private System.Windows.Forms.RadioButton auctionAndBuyrb;
+        private System.Windows.Forms.Label label1;
     }
 }
 

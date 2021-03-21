@@ -64,3 +64,4 @@ C:\Users\User\Desktop\New folder (3)\eBayScraper\eBayScraper\obj\Debug\netcoreap
 C:\Users\User\Desktop\New folder (3)\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.pdb
 C:\Users\User\Desktop\New folder (3)\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.genruntimeconfig.cache
 C:\Users\User\Desktop\New folder (3)\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.MainForm.resources
+C:\Users\User\Desktop\New folder (3)\eBayScraper\eBayScraper\obj\Debug\netcoreapp3.1\eBayScraper.InstructionsForm.resources
