@@ -69,12 +69,12 @@ namespace eBayScraper
             // resultsBx
             // 
             this.resultsBx.BackColor = System.Drawing.Color.White;
-            this.resultsBx.Location = new System.Drawing.Point(52, 114);
+            this.resultsBx.Location = new System.Drawing.Point(22, 114);
             this.resultsBx.Multiline = true;
             this.resultsBx.Name = "resultsBx";
             this.resultsBx.ReadOnly = true;
             this.resultsBx.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.resultsBx.Size = new System.Drawing.Size(597, 324);
+            this.resultsBx.Size = new System.Drawing.Size(634, 324);
             this.resultsBx.TabIndex = 1;
             // 
             // helpPicbx
@@ -87,6 +87,7 @@ namespace eBayScraper
             this.helpPicbx.TabIndex = 3;
             this.helpPicbx.TabStop = false;
             this.helpPicbx.Click += new System.EventHandler(this.helpPicbx_Click);
+            this.helpPicbx.MouseEnter += new System.EventHandler(this.helpPicbx_MouseEnter);
             // 
             // goBtn
             // 
@@ -100,10 +101,10 @@ namespace eBayScraper
             // 
             // statustxtbx
             // 
-            this.statustxtbx.Location = new System.Drawing.Point(52, 85);
+            this.statustxtbx.Location = new System.Drawing.Point(22, 85);
             this.statustxtbx.Name = "statustxtbx";
             this.statustxtbx.ReadOnly = true;
-            this.statustxtbx.Size = new System.Drawing.Size(253, 23);
+            this.statustxtbx.Size = new System.Drawing.Size(283, 23);
             this.statustxtbx.TabIndex = 4;
             this.statustxtbx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -164,7 +165,7 @@ namespace eBayScraper
             // 
             // exportbtn
             // 
-            this.exportbtn.Location = new System.Drawing.Point(676, 347);
+            this.exportbtn.Location = new System.Drawing.Point(676, 413);
             this.exportbtn.Name = "exportbtn";
             this.exportbtn.Size = new System.Drawing.Size(156, 25);
             this.exportbtn.TabIndex = 8;
@@ -240,7 +241,7 @@ namespace eBayScraper
             // 
             // minPricebx
             // 
-            this.minPricebx.Location = new System.Drawing.Point(12, 446);
+            this.minPricebx.Location = new System.Drawing.Point(22, 446);
             this.minPricebx.Name = "minPricebx";
             this.minPricebx.ReadOnly = true;
             this.minPricebx.Size = new System.Drawing.Size(161, 23);
@@ -248,7 +249,7 @@ namespace eBayScraper
             // 
             // maxPricebx
             // 
-            this.maxPricebx.Location = new System.Drawing.Point(440, 446);
+            this.maxPricebx.Location = new System.Drawing.Point(452, 446);
             this.maxPricebx.Name = "maxPricebx";
             this.maxPricebx.ReadOnly = true;
             this.maxPricebx.Size = new System.Drawing.Size(161, 23);
@@ -284,6 +285,9 @@ namespace eBayScraper
             this.Controls.Add(this.helpPicbx);
             this.Controls.Add(this.resultsBx);
             this.Controls.Add(this.searchBx);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
