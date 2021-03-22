@@ -50,16 +50,21 @@ namespace eBayScraper
             this.minPricebx = new System.Windows.Forms.TextBox();
             this.maxPricebx = new System.Windows.Forms.TextBox();
             this.maxPricebar = new System.Windows.Forms.TrackBar();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.anypricerb = new System.Windows.Forms.RadioButton();
+            this.definedPricerb = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).BeginInit();
             this.checkboxpnl.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minPricebar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPricebar)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // searchBx
             // 
-            this.searchBx.Location = new System.Drawing.Point(150, 12);
+            this.searchBx.Location = new System.Drawing.Point(167, 12);
             this.searchBx.Name = "searchBx";
             this.searchBx.Size = new System.Drawing.Size(489, 23);
             this.searchBx.TabIndex = 1;
@@ -69,7 +74,7 @@ namespace eBayScraper
             // resultsBx
             // 
             this.resultsBx.BackColor = System.Drawing.Color.White;
-            this.resultsBx.Location = new System.Drawing.Point(22, 114);
+            this.resultsBx.Location = new System.Drawing.Point(22, 95);
             this.resultsBx.Multiline = true;
             this.resultsBx.Name = "resultsBx";
             this.resultsBx.ReadOnly = true;
@@ -81,9 +86,9 @@ namespace eBayScraper
             // 
             this.helpPicbx.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("helpPicbx.BackgroundImage")));
             this.helpPicbx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.helpPicbx.Location = new System.Drawing.Point(742, 12);
+            this.helpPicbx.Location = new System.Drawing.Point(758, 12);
             this.helpPicbx.Name = "helpPicbx";
-            this.helpPicbx.Size = new System.Drawing.Size(80, 76);
+            this.helpPicbx.Size = new System.Drawing.Size(64, 63);
             this.helpPicbx.TabIndex = 3;
             this.helpPicbx.TabStop = false;
             this.helpPicbx.Click += new System.EventHandler(this.helpPicbx_Click);
@@ -91,9 +96,9 @@ namespace eBayScraper
             // 
             // goBtn
             // 
-            this.goBtn.Location = new System.Drawing.Point(332, 41);
+            this.goBtn.Location = new System.Drawing.Point(676, 423);
             this.goBtn.Name = "goBtn";
-            this.goBtn.Size = new System.Drawing.Size(127, 25);
+            this.goBtn.Size = new System.Drawing.Size(162, 25);
             this.goBtn.TabIndex = 0;
             this.goBtn.Text = "SEARCH";
             this.goBtn.UseVisualStyleBackColor = true;
@@ -101,7 +106,7 @@ namespace eBayScraper
             // 
             // statustxtbx
             // 
-            this.statustxtbx.Location = new System.Drawing.Point(22, 85);
+            this.statustxtbx.Location = new System.Drawing.Point(22, 65);
             this.statustxtbx.Name = "statustxtbx";
             this.statustxtbx.ReadOnly = true;
             this.statustxtbx.Size = new System.Drawing.Size(283, 23);
@@ -165,9 +170,9 @@ namespace eBayScraper
             // 
             // exportbtn
             // 
-            this.exportbtn.Location = new System.Drawing.Point(676, 413);
+            this.exportbtn.Location = new System.Drawing.Point(676, 454);
             this.exportbtn.Name = "exportbtn";
-            this.exportbtn.Size = new System.Drawing.Size(156, 25);
+            this.exportbtn.Size = new System.Drawing.Size(162, 25);
             this.exportbtn.TabIndex = 8;
             this.exportbtn.Text = "EXPORT";
             this.exportbtn.UseVisualStyleBackColor = true;
@@ -230,18 +235,18 @@ namespace eBayScraper
             // 
             // minPricebar
             // 
-            this.minPricebar.Location = new System.Drawing.Point(12, 475);
-            this.minPricebar.Maximum = 5000;
+            this.minPricebar.Location = new System.Drawing.Point(22, 485);
+            this.minPricebar.Maximum = 2000;
             this.minPricebar.Name = "minPricebar";
             this.minPricebar.Size = new System.Drawing.Size(422, 45);
             this.minPricebar.TabIndex = 11;
-            this.minPricebar.TickFrequency = 50;
+            this.minPricebar.TickFrequency = 60;
             this.minPricebar.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.minPricebar.Scroll += new System.EventHandler(this.minPricebar_Scroll);
             // 
             // minPricebx
             // 
-            this.minPricebx.Location = new System.Drawing.Point(22, 446);
+            this.minPricebx.Location = new System.Drawing.Point(22, 456);
             this.minPricebx.Name = "minPricebx";
             this.minPricebx.ReadOnly = true;
             this.minPricebx.Size = new System.Drawing.Size(161, 23);
@@ -249,7 +254,7 @@ namespace eBayScraper
             // 
             // maxPricebx
             // 
-            this.maxPricebx.Location = new System.Drawing.Point(452, 446);
+            this.maxPricebx.Location = new System.Drawing.Point(450, 456);
             this.maxPricebx.Name = "maxPricebx";
             this.maxPricebx.ReadOnly = true;
             this.maxPricebx.Size = new System.Drawing.Size(161, 23);
@@ -257,22 +262,67 @@ namespace eBayScraper
             // 
             // maxPricebar
             // 
-            this.maxPricebar.Location = new System.Drawing.Point(440, 475);
-            this.maxPricebar.Maximum = 5000;
+            this.maxPricebar.Location = new System.Drawing.Point(441, 485);
+            this.maxPricebar.Maximum = 2000;
             this.maxPricebar.Name = "maxPricebar";
             this.maxPricebar.Size = new System.Drawing.Size(422, 45);
             this.maxPricebar.TabIndex = 15;
-            this.maxPricebar.TickFrequency = 50;
+            this.maxPricebar.TickFrequency = 60;
             this.maxPricebar.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.maxPricebar.Value = 5000;
+            this.maxPricebar.Value = 2000;
             this.maxPricebar.Scroll += new System.EventHandler(this.maxPricebar_Scroll);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.anypricerb);
+            this.panel2.Controls.Add(this.definedPricerb);
+            this.panel2.Location = new System.Drawing.Point(676, 338);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(162, 81);
+            this.panel2.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(37, 6);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 15);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Price Range";
+            // 
+            // anypricerb
+            // 
+            this.anypricerb.AutoSize = true;
+            this.anypricerb.Checked = true;
+            this.anypricerb.Location = new System.Drawing.Point(5, 26);
+            this.anypricerb.Name = "anypricerb";
+            this.anypricerb.Size = new System.Drawing.Size(46, 19);
+            this.anypricerb.TabIndex = 9;
+            this.anypricerb.TabStop = true;
+            this.anypricerb.Text = "Any";
+            this.anypricerb.UseVisualStyleBackColor = true;
+            // 
+            // definedPricerb
+            // 
+            this.definedPricerb.AutoSize = true;
+            this.definedPricerb.Location = new System.Drawing.Point(5, 51);
+            this.definedPricerb.Name = "definedPricerb";
+            this.definedPricerb.Size = new System.Drawing.Size(101, 19);
+            this.definedPricerb.TabIndex = 7;
+            this.definedPricerb.Text = "Defined Below";
+            this.definedPricerb.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(862, 521);
+            this.ClientSize = new System.Drawing.Size(862, 541);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.maxPricebar);
             this.Controls.Add(this.maxPricebx);
             this.Controls.Add(this.minPricebx);
@@ -299,6 +349,8 @@ namespace eBayScraper
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minPricebar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPricebar)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -326,6 +378,10 @@ namespace eBayScraper
         private System.Windows.Forms.TextBox minPricebx;
         private System.Windows.Forms.TextBox maxPricebx;
         private System.Windows.Forms.TrackBar maxPricebar;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton anypricerb;
+        private System.Windows.Forms.RadioButton definedPricerb;
     }
 }
 

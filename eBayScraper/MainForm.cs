@@ -38,9 +38,8 @@ namespace eBayScraper
             if (URLIsValid(url))
             {
                 HttpClient httpClient = new HttpClient();
-
+            
                 string html = await httpClient.GetStringAsync(url);
-
                 var htmldocument = new HtmlAgilityPack.HtmlDocument();
 
                 htmldocument.LoadHtml(html);
@@ -67,54 +66,47 @@ namespace eBayScraper
         {
             var productListItems = new List<HtmlAgilityPack.HtmlNode>();
 
-      
-                //MessageBox.Show("Only 'advanced' eBay searches can be used. Follow the directions for help.");
-                //searchBx.Text = URLPROMPT;
-                //statustxtbx.Text = "";
-           
+            productListItems = products[0].Descendants("li")
+             .Where(node => node.GetAttributeValue("id", "")
+             .Contains("item")).ToList();
 
-                productListItems = products[0].Descendants("li")
-                 .Where(node => node.GetAttributeValue("id", "")
-                 .Contains("item")).ToList();
-                var productListItem = products[0].Descendants();
-
-            
+            var productListItem = products[0].Descendants();
 
             if (auctionOnlyrb.Checked && freeAndPaidrb.Checked)
             {
-                IterateThroughItemsForAuctions(productListItems);
+                FindAllAuctions(productListItems);
             }
             else if (auctionAndBuyrb.Checked && freeOnlyrb.Checked)
             {
-                IterateThroughItemsForAllFreeShipping(productListItems);
-
-            }else if(auctionAndBuyrb.Checked && paidOnlyrb.Checked)
+                FindAllFreeShipping(productListItems);
+            }
+            else if (auctionAndBuyrb.Checked && paidOnlyrb.Checked)
             {
-                IterateThroughItemsForAllPaid(productListItems);
+                FindAllPaidShipping(productListItems);
             }
             else if (buyNowOnlyrb.Checked && freeAndPaidrb.Checked)
             {
-                IterateThroughItemsForBuyNow(productListItems);
+                FindAllBuyNow(productListItems);
             }
             else if (auctionAndBuyrb.Checked && freeAndPaidrb.Checked)
             {
-                IterateForAllItems(productListItems);
+                FindAllItems(productListItems);
             }
             else if (auctionOnlyrb.Checked && freeOnlyrb.Checked)
             {
-                IterateThroughItemsForAuctionsAndFreeShipping(productListItems);
+                FindAllAuctionsWithFreeShipping(productListItems);
             }
-            else if (buyNowOnlyrb.Checked && freeOnlyrb.Checked ) // buy now free postage
+            else if (buyNowOnlyrb.Checked && freeOnlyrb.Checked) // buy now free postage
             {
-                IterateThroughItemsForBuyNowAndFreeShipping(productListItems);
+                FindAllBuyNowWithFreeShipping(productListItems);
             }
             else if (auctionOnlyrb.Checked && paidOnlyrb.Checked)
             {
-                IterateThroughItemsForAuctionAndPaidShipping(productListItems);
+                FindAllAuctionsWithPaidShipping(productListItems);
             }
             else if (buyNowOnlyrb.Checked && paidOnlyrb.Checked) //buy now and paid shippping
             {
-                IterateThroughItemsForBuyNowAndPaidShipping(productListItems);
+                FindAllBuyNowWithPaidShipping(productListItems);
             }
         }
 
@@ -122,7 +114,7 @@ namespace eBayScraper
         /// Only returns items that are being auctioned 
         /// </summary>
         /// <param name="_productListItems"></param>
-        private void IterateThroughItemsForAuctions(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        private void FindAllAuctions(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
             string buyingFormat = "";
@@ -133,44 +125,51 @@ namespace eBayScraper
 
             foreach (var Item in _productListItems)
             {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid"))
+                if (ItemIsInPriceRange(Item))
                 {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid"))
+                    {
+                        //product id
+                        id = Item.GetAttributeValue("listingid", "");
 
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+                        //product title
+                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
 
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+                        //product price
+                        price = "" + Regex.Match(Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvprice prc")).FirstOrDefault().
+                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
 
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
+                        //shippping format
+                        shippingPrice = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
 
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
+                        //buying format
+                        buyingFormat = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
 
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
+                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        amountOfItems++;
+                    }
+
+                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
                 }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                }
             }
         }
 
-        private void IterateForAllItems(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        private void FindAllItems(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
             string buyingFormat = "";
@@ -216,310 +215,14 @@ namespace eBayScraper
 
                     statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
                 }
-                else
+                else if (amountOfItems == 0)
                 {
                     statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
 
-        private void IterateThroughItemsForBuyNow(List<HtmlAgilityPack.HtmlNode> _productListItems)
-        {
-            int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
-
-            foreach (var Item in _productListItems)
-            {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid"))
-                {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
-
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
-                }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-            }
-        }
-        private void IterateThroughItemsForAllFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
-        {
-            int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
-
-            foreach (var Item in _productListItems)
-            {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (!Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim).Contains("£"))
-                {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
-
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
-                }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-            }
-        }
-        private void IterateThroughItemsForAllPaid(List<HtmlAgilityPack.HtmlNode> _productListItems)
-        {
-            int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
-
-            foreach (var Item in _productListItems)
-            {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim).Contains("£"))
-                {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
-
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
-                }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-            }
-        }
-        private void IterateThroughItemsForAuctionsAndFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
-        {
-            int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
-
-            foreach (var Item in _productListItems)
-            {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && !Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim).Contains("£"))
-                {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
-
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
-                }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-            }
-        }
-        private void IterateThroughItemsForBuyNowAndFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
-        {
-            int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
-
-            foreach (var Item in _productListItems)
-            {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim).Contains("£"))
-                {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
-
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
-                }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-            }
-        }
-        private void IterateThroughItemsForBuyNowAndPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
-        {
-            int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
-
-            foreach (var Item in _productListItems)
-            {
-                //check if item is set as a auction by checking if the html element contains the word 'bid'
-                if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim).Contains("£"))
-                {
-                    //product id
-                    id = Item.GetAttributeValue("listingid", "");
-
-                    //product title
-                    title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                    //product price
-                    price = "" + Regex.Match(Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvprice prc")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim), @"\d+.\d+");
-
-                    //shippping format
-                    shippingPrice = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvshipping")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    //buying format
-                    buyingFormat = Item.Descendants("li").
-                    Where(node => node.GetAttributeValue("class", "").
-                    Equals("lvformat")).FirstOrDefault().
-                    InnerText.Trim(elementsToTrim);
-
-                    PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                    amountOfItems++;
-                }
-
-                statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-            }
-        }
-
-        private void IterateThroughItemsForAuctionAndPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        private void FindAllBuyNow(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
             string buyingFormat = "";
@@ -534,7 +237,62 @@ namespace eBayScraper
                 {
                     //check if item is set as a auction by checking if the html element contains the word 'bid'
                     if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
+                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid"))
+                    {
+                        //product id
+                        id = Item.GetAttributeValue("listingid", "");
+
+                        //product title
+                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+
+                        //product price
+                        price = "" + Regex.Match(Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvprice prc")).FirstOrDefault().
+                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+
+                        //shippping format
+                        shippingPrice = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        //buying format
+                        buyingFormat = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        amountOfItems++;
+                    }
+
+                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                }
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                }
+            }
+        }
+
+        private void FindAllFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        {
+            int amountOfItems = 0;
+            string buyingFormat = "";
+            string id = "";
+            string price = "";
+            string title = "";
+            string shippingPrice = "";
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (!Item.Descendants("li").
                         Where(node => node.GetAttributeValue("class", "").
                         Equals("lvshipping")).FirstOrDefault().
                         InnerText.Trim(elementsToTrim).Contains("£"))
@@ -569,6 +327,301 @@ namespace eBayScraper
                     }
 
                     statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                }
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                }
+            }
+        }
+
+        private void FindAllPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        {
+            int amountOfItems = 0;
+            string buyingFormat = "";
+            string id = "";
+            string price = "";
+            string title = "";
+            string shippingPrice = "";
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim).Contains("£"))
+                    {
+                        //product id
+                        id = Item.GetAttributeValue("listingid", "");
+
+                        //product title
+                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+
+                        //product price
+                        price = "" + Regex.Match(Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvprice prc")).FirstOrDefault().
+                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+
+                        //shippping format
+                        shippingPrice = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        //buying format
+                        buyingFormat = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        amountOfItems++;
+                    }
+
+                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                }
+            }
+        }
+
+        private void FindAllAuctionsWithFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        {
+            int amountOfItems = 0;
+            string buyingFormat = "";
+            string id = "";
+            string price = "";
+            string title = "";
+            string shippingPrice = "";
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && !Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim).Contains("£"))
+                    {
+                        //product id
+                        id = Item.GetAttributeValue("listingid", "");
+
+                        //product title
+                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+
+                        //product price
+                        price = "" + Regex.Match(Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvprice prc")).FirstOrDefault().
+                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+
+                        //shippping format
+                        shippingPrice = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        //buying format
+                        buyingFormat = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        amountOfItems++;
+                    }
+
+                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+
+                }
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                }
+            }
+        }
+
+        private void FindAllBuyNowWithFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        {
+            int amountOfItems = 0;
+            string buyingFormat = "";
+            string id = "";
+            string price = "";
+            string title = "";
+            string shippingPrice = "";
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && !Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim).Contains("£"))
+                    {
+                        //product id
+                        id = Item.GetAttributeValue("listingid", "");
+
+                        //product title
+                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+
+                        //product price
+                        price = "" + Regex.Match(Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvprice prc")).FirstOrDefault().
+                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+
+                        //shippping format
+                        shippingPrice = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        //buying format
+                        buyingFormat = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        amountOfItems++;
+                    }
+
+                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+
+                }
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                }
+            }
+        }
+
+        private void FindAllBuyNowWithPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        {
+            int amountOfItems = 0;
+            string buyingFormat = "";
+            string id = "";
+            string price = "";
+            string title = "";
+            string shippingPrice = "";
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim).Contains("£"))
+                    {
+                        //product id
+                        id = Item.GetAttributeValue("listingid", "");
+
+                        //product title
+                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+
+                        //product price
+                        price = "" + Regex.Match(Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvprice prc")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim), @"\d+.\d+");
+
+                        //shippping format
+                        shippingPrice = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        //buying format
+                        buyingFormat = Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim);
+
+                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        amountOfItems++;
+                    }
+
+                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                }
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                }
+            }
+        }
+
+        private void FindAllAuctionsWithPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
+        {
+            int amountOfItems = 0;
+            string buyingFormat = "";
+            string id = "";
+            string price = "";
+            string title = "";
+            string shippingPrice = "";
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+                    if (ItemIsInPriceRange(Item))
+                    {
+                        //check if item is set as a auction by checking if the html element contains the word 'bid'
+                        if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
+                            Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
+                            Where(node => node.GetAttributeValue("class", "").
+                            Equals("lvshipping")).FirstOrDefault().
+                            InnerText.Trim(elementsToTrim).Contains("£"))
+                        {
+                            //product id
+                            id = Item.GetAttributeValue("listingid", "");
+
+                            //product title
+                            title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+                            Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+
+                            //product price
+                            price = "" + Regex.Match(Item.Descendants("li").
+                            Where(node => node.GetAttributeValue("class", "").
+                            Equals("lvprice prc")).FirstOrDefault().
+                            InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+
+                            //shippping format
+                            shippingPrice = Item.Descendants("li").
+                            Where(node => node.GetAttributeValue("class", "").
+                            Equals("lvshipping")).FirstOrDefault().
+                            InnerText.Trim(elementsToTrim);
+
+                            //buying format
+                            buyingFormat = Item.Descendants("li").
+                            Where(node => node.GetAttributeValue("class", "").
+                            Equals("lvformat")).FirstOrDefault().
+                            InnerText.Trim(elementsToTrim);
+
+                            PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                            amountOfItems++;
+                        }
+
+                        statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    }
+                }
+                else if (amountOfItems == 0)
+                {
+                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -627,16 +680,12 @@ namespace eBayScraper
 
         private bool ItemIsInPriceRange(HtmlAgilityPack.HtmlNode item)
         {
-
-            var itemPrice =  Regex.Match(item.Descendants("li").
+            string itemPrice = Regex.Match(item.Descendants("li").
                   Where(node => node.GetAttributeValue("class", "").
                   Equals("lvprice prc")).FirstOrDefault().
                   InnerText.Trim(elementsToTrim), @"\d+.\d+").ToString();
 
-          
-
-
-            if ((double.Parse( itemPrice) >= minPricebar.Value && double.Parse(itemPrice) <= maxPricebar.Value))
+            if ((double.Parse(itemPrice) >= minPricebar.Value && double.Parse(itemPrice) <= maxPricebar.Value) || anypricerb.Checked)
             {
                 return true;
             }
@@ -645,7 +694,7 @@ namespace eBayScraper
                 return false;
             }
         }
-    
+
         /// <summary>
         /// Triggers on clicking of the search button
         /// </summary>
@@ -745,7 +794,7 @@ namespace eBayScraper
 
         private void helpPicbx_MouseEnter(object sender, EventArgs e)
         {
-            
+            helpPicbx.Image = " ";
         }
     }
 }
