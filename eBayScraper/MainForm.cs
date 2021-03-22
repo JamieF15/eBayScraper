@@ -38,7 +38,7 @@ namespace eBayScraper
             if (URLIsValid(url))
             {
                 HttpClient httpClient = new HttpClient();
-            
+
                 string html = await httpClient.GetStringAsync(url);
                 var htmldocument = new HtmlAgilityPack.HtmlDocument();
 
@@ -783,18 +783,46 @@ namespace eBayScraper
 
         private void minPricebar_Scroll(object sender, EventArgs e)
         {
-            minPricebx.Text = "Minimum Price: £" + minPricebar.Value;
-
+    
         }
 
         private void maxPricebar_Scroll(object sender, EventArgs e)
         {
-            maxPricebx.Text = "Maximum Price: £" + maxPricebar.Value;
+  
         }
 
         private void helpPicbx_MouseEnter(object sender, EventArgs e)
         {
-            helpPicbx.Image = " ";
+            helpPicbx.Image = Properties.Resources.selectedqhelpicon;
+        }
+
+        private void helpPicbx_MouseLeave(object sender, EventArgs e)
+        {
+            helpPicbx.Image = Properties.Resources.notselectedqhelpicon;
+        }
+
+        private void maxPricebar_ValueChanged(object sender, EventArgs e)
+        {
+            if (maxPricebar.Value > minPricebar.Value)
+            {
+                maxPricebx.Text = "Maximum Price: £" + maxPricebar.Value;
+            }
+            else
+            {
+                maxPricebar.Value = minPricebar.Value;
+            }
+        }
+
+        private void minPricebar_ValueChanged(object sender, EventArgs e)
+        {
+            if (minPricebar.Value < maxPricebar.Value)
+            {
+                minPricebx.Text = "Minimum Price: £" + minPricebar.Value;
+            }
+            else
+            {
+                minPricebar.Value = maxPricebar.Value;
+            }
         }
     }
 }

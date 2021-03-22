@@ -64,10 +64,10 @@ namespace eBayScraper
             // 
             // searchBx
             // 
-            this.searchBx.Location = new System.Drawing.Point(167, 12);
+            this.searchBx.Location = new System.Drawing.Point(166, 21);
             this.searchBx.Name = "searchBx";
             this.searchBx.Size = new System.Drawing.Size(489, 23);
-            this.searchBx.TabIndex = 1;
+            this.searchBx.TabIndex = 0;
             this.searchBx.Click += new System.EventHandler(this.searchBx_Click);
             this.searchBx.Leave += new System.EventHandler(this.searchBx_Leave);
             // 
@@ -86,20 +86,21 @@ namespace eBayScraper
             // 
             this.helpPicbx.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("helpPicbx.BackgroundImage")));
             this.helpPicbx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.helpPicbx.Location = new System.Drawing.Point(758, 12);
+            this.helpPicbx.Location = new System.Drawing.Point(774, 12);
             this.helpPicbx.Name = "helpPicbx";
             this.helpPicbx.Size = new System.Drawing.Size(64, 63);
             this.helpPicbx.TabIndex = 3;
             this.helpPicbx.TabStop = false;
             this.helpPicbx.Click += new System.EventHandler(this.helpPicbx_Click);
             this.helpPicbx.MouseEnter += new System.EventHandler(this.helpPicbx_MouseEnter);
+            this.helpPicbx.MouseLeave += new System.EventHandler(this.helpPicbx_MouseLeave);
             // 
             // goBtn
             // 
             this.goBtn.Location = new System.Drawing.Point(676, 423);
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(162, 25);
-            this.goBtn.TabIndex = 0;
+            this.goBtn.TabIndex = 1;
             this.goBtn.Text = "SEARCH";
             this.goBtn.UseVisualStyleBackColor = true;
             this.goBtn.Click += new System.EventHandler(this.goBtn_Click);
@@ -121,7 +122,7 @@ namespace eBayScraper
             this.checkboxpnl.Controls.Add(this.auctionAndBuyrb);
             this.checkboxpnl.Controls.Add(this.buyNowOnlyrb);
             this.checkboxpnl.Controls.Add(this.auctionOnlyrb);
-            this.checkboxpnl.Location = new System.Drawing.Point(676, 114);
+            this.checkboxpnl.Location = new System.Drawing.Point(676, 95);
             this.checkboxpnl.Name = "checkboxpnl";
             this.checkboxpnl.Size = new System.Drawing.Size(162, 106);
             this.checkboxpnl.TabIndex = 6;
@@ -186,7 +187,7 @@ namespace eBayScraper
             this.panel1.Controls.Add(this.freeAndPaidrb);
             this.panel1.Controls.Add(this.paidOnlyrb);
             this.panel1.Controls.Add(this.freeOnlyrb);
-            this.panel1.Location = new System.Drawing.Point(676, 226);
+            this.panel1.Location = new System.Drawing.Point(676, 216);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(162, 106);
             this.panel1.TabIndex = 10;
@@ -195,7 +196,7 @@ namespace eBayScraper
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(15, 3);
+            this.label2.Location = new System.Drawing.Point(19, 2);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 15);
             this.label2.TabIndex = 7;
@@ -240,13 +241,13 @@ namespace eBayScraper
             this.minPricebar.Name = "minPricebar";
             this.minPricebar.Size = new System.Drawing.Size(422, 45);
             this.minPricebar.TabIndex = 11;
-            this.minPricebar.TickFrequency = 60;
-            this.minPricebar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.minPricebar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.minPricebar.Scroll += new System.EventHandler(this.minPricebar_Scroll);
+            this.minPricebar.ValueChanged += new System.EventHandler(this.minPricebar_ValueChanged);
             // 
             // minPricebx
             // 
-            this.minPricebx.Location = new System.Drawing.Point(22, 456);
+            this.minPricebx.Location = new System.Drawing.Point(31, 456);
             this.minPricebx.Name = "minPricebx";
             this.minPricebx.ReadOnly = true;
             this.minPricebx.Size = new System.Drawing.Size(161, 23);
@@ -262,15 +263,17 @@ namespace eBayScraper
             // 
             // maxPricebar
             // 
+            this.maxPricebar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.maxPricebar.Location = new System.Drawing.Point(441, 485);
             this.maxPricebar.Maximum = 2000;
+            this.maxPricebar.Minimum = 1;
             this.maxPricebar.Name = "maxPricebar";
             this.maxPricebar.Size = new System.Drawing.Size(422, 45);
             this.maxPricebar.TabIndex = 15;
-            this.maxPricebar.TickFrequency = 60;
-            this.maxPricebar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.maxPricebar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.maxPricebar.Value = 2000;
             this.maxPricebar.Scroll += new System.EventHandler(this.maxPricebar_Scroll);
+            this.maxPricebar.ValueChanged += new System.EventHandler(this.maxPricebar_ValueChanged);
             // 
             // panel2
             // 
@@ -279,7 +282,7 @@ namespace eBayScraper
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.anypricerb);
             this.panel2.Controls.Add(this.definedPricerb);
-            this.panel2.Location = new System.Drawing.Point(676, 338);
+            this.panel2.Location = new System.Drawing.Point(676, 336);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(162, 81);
             this.panel2.TabIndex = 11;
@@ -288,7 +291,7 @@ namespace eBayScraper
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(37, 6);
+            this.label3.Location = new System.Drawing.Point(47, 2);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 15);
             this.label3.TabIndex = 7;
@@ -298,7 +301,7 @@ namespace eBayScraper
             // 
             this.anypricerb.AutoSize = true;
             this.anypricerb.Checked = true;
-            this.anypricerb.Location = new System.Drawing.Point(5, 26);
+            this.anypricerb.Location = new System.Drawing.Point(5, 23);
             this.anypricerb.Name = "anypricerb";
             this.anypricerb.Size = new System.Drawing.Size(46, 19);
             this.anypricerb.TabIndex = 9;
@@ -309,7 +312,7 @@ namespace eBayScraper
             // definedPricerb
             // 
             this.definedPricerb.AutoSize = true;
-            this.definedPricerb.Location = new System.Drawing.Point(5, 51);
+            this.definedPricerb.Location = new System.Drawing.Point(5, 48);
             this.definedPricerb.Name = "definedPricerb";
             this.definedPricerb.Size = new System.Drawing.Size(101, 19);
             this.definedPricerb.TabIndex = 7;

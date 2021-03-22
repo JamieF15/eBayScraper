@@ -63,6 +63,16 @@ namespace eBayScraper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap notselectedqhelpicon {
+            get {
+                object obj = ResourceManager.GetObject("notselectedqhelpicon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap question {
             get {
                 object obj = ResourceManager.GetObject("question", resourceCulture);
@@ -76,6 +86,16 @@ namespace eBayScraper.Properties {
         internal static System.Drawing.Bitmap research {
             get {
                 object obj = ResourceManager.GetObject("research", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap selectedqhelpicon {
+            get {
+                object obj = ResourceManager.GetObject("selectedqhelpicon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
