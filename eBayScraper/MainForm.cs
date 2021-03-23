@@ -12,18 +12,21 @@ namespace eBayScraper
     //code refrenced from: https://www.youtube.com/watch?v=BE708X6r24o
     public partial class MainForm : Form
     {
+        //propts the user to enter an ebay url 
         public const string URLPROMPT = "Enter an eBay URL";
 
-        public String url = "";
+        //the ebay url that's being scraped for data
+        public String url;
 
+        //stores the hiddin formatting to be trimmed from the html node's data 
         public static char[] elementsToTrim = new char[] { '\r', '\n', '\t' };
 
         public MainForm()
         {
             InitializeComponent();
-            searchBx.Text = URLPROMPT;
-            minPricebx.Text = "Minimum Price: £" + minPricebar.Value;
-            maxPricebx.Text = "Maximum Price: £" + maxPricebar.Value;
+
+            //on form load, set the text of the search text box to the url prompt
+            tbsearch.Text = URLPROMPT;
         }
 
         /// <summary>
@@ -32,16 +35,21 @@ namespace eBayScraper
         private async void GetHTML()
         {
             //clears the results box
-            resultsBx.Text = "";
+            tbresult.Text = "";
 
             //check if the url is valid 
             if (URLIsValid(url))
             {
+                //instantiate a httpclient 
                 HttpClient httpClient = new HttpClient();
 
+                //gets the html of the inputted url's web[age and stores it 
                 string html = await httpClient.GetStringAsync(url);
+
+                //html document to load the webpage's html
                 var htmldocument = new HtmlAgilityPack.HtmlDocument();
 
+                //load the webpages html
                 htmldocument.LoadHtml(html);
 
                 //loads the ebay listings into a list   
@@ -52,59 +60,61 @@ namespace eBayScraper
                 //returns all needed products based on the clicked radio buttons
                 RetreiveAllNeededItems(products);
             }
+            //if the url is not valid, inform the user
             else
             {
-                statustxtbx.Text = "Enter a valid eBay URL";
+                tbstatus.Text = "Enter a valid eBay URL";
             }
         }
 
         /// <summary>
-        /// Obtains all items 
+        /// Obtains all items based on the combination of checked radio buttons 
         /// </summary>
         /// <param name="products"></param>
         private void RetreiveAllNeededItems(List<HtmlAgilityPack.HtmlNode> products)
         {
-            var productListItems = new List<HtmlAgilityPack.HtmlNode>();
+            //list of html nodes
+            List<HtmlAgilityPack.HtmlNode> productListItems = new List<HtmlAgilityPack.HtmlNode>();
 
-            productListItems = products[0].Descendants("li")
-             .Where(node => node.GetAttributeValue("id", "")
-             .Contains("item")).ToList();
+            //populate the list with html nodes that have attributes values that contaim the term "item"
+            productListItems = products[0].Descendants("li").Where(node => node.GetAttributeValue("id", "").Contains("item")).ToList();
 
-            var productListItem = products[0].Descendants();
-
-            if (auctionOnlyrb.Checked && freeAndPaidrb.Checked)
+         //   var productListItem = products[0].Descendants();
+   
+            //based on the radio button's clicked, perform the appropriate search
+            if (rbauctiononly.Checked && rbfreeandpaid.Checked)
             {
                 FindAllAuctions(productListItems);
             }
-            else if (auctionAndBuyrb.Checked && freeOnlyrb.Checked)
+            else if (rbauctionandbuy.Checked && rbfreeonly.Checked)
             {
                 FindAllFreeShipping(productListItems);
             }
-            else if (auctionAndBuyrb.Checked && paidOnlyrb.Checked)
+            else if (rbauctionandbuy.Checked && rbpaidonly.Checked)
             {
                 FindAllPaidShipping(productListItems);
             }
-            else if (buyNowOnlyrb.Checked && freeAndPaidrb.Checked)
+            else if (rbbuyitnow.Checked && rbfreeandpaid.Checked)
             {
                 FindAllBuyNow(productListItems);
             }
-            else if (auctionAndBuyrb.Checked && freeAndPaidrb.Checked)
+            else if (rbauctionandbuy.Checked && rbfreeandpaid.Checked)
             {
                 FindAllItems(productListItems);
             }
-            else if (auctionOnlyrb.Checked && freeOnlyrb.Checked)
+            else if (rbauctiononly.Checked && rbfreeonly.Checked)
             {
                 FindAllAuctionsWithFreeShipping(productListItems);
             }
-            else if (buyNowOnlyrb.Checked && freeOnlyrb.Checked) // buy now free postage
+            else if (rbbuyitnow.Checked && rbfreeonly.Checked) // buy now free postage
             {
                 FindAllBuyNowWithFreeShipping(productListItems);
             }
-            else if (auctionOnlyrb.Checked && paidOnlyrb.Checked)
+            else if (rbauctiononly.Checked && rbpaidonly.Checked)
             {
                 FindAllAuctionsWithPaidShipping(productListItems);
             }
-            else if (buyNowOnlyrb.Checked && paidOnlyrb.Checked) //buy now and paid shippping
+            else if (rbbuyitnow.Checked && rbpaidonly.Checked) //buy now and paid shippping
             {
                 FindAllBuyNowWithPaidShipping(productListItems);
             }
@@ -160,15 +170,19 @@ namespace eBayScraper
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_productListItems"></param>
         private void FindAllItems(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
@@ -213,11 +227,11 @@ namespace eBayScraper
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -225,11 +239,6 @@ namespace eBayScraper
         private void FindAllBuyNow(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -239,40 +248,16 @@ namespace eBayScraper
                     if (!Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
                         Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -280,57 +265,27 @@ namespace eBayScraper
         private void FindAllFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
                 if (ItemIsInPriceRange(Item))
                 {
-
                     //check if item is set as a auction by checking if the html element contains the word 'bid'
                     if (!Item.Descendants("li").
                         Where(node => node.GetAttributeValue("class", "").
                         Equals("lvshipping")).FirstOrDefault().
                         InnerText.Trim(elementsToTrim).Contains("£"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -338,11 +293,6 @@ namespace eBayScraper
         private void FindAllPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -354,36 +304,12 @@ namespace eBayScraper
                         Equals("lvshipping")).FirstOrDefault().
                         InnerText.Trim(elementsToTrim).Contains("£"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
             }
         }
@@ -391,11 +317,6 @@ namespace eBayScraper
         private void FindAllAuctionsWithFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -409,41 +330,17 @@ namespace eBayScraper
                         Equals("lvshipping")).FirstOrDefault().
                         InnerText.Trim(elementsToTrim).Contains("£"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
 
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -451,11 +348,6 @@ namespace eBayScraper
         private void FindAllBuyNowWithFreeShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -468,41 +360,16 @@ namespace eBayScraper
                         Equals("lvshipping")).FirstOrDefault().
                         InnerText.Trim(elementsToTrim).Contains("£"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
-
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
+                        RetreiveItems(Item);
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
 
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -510,11 +377,6 @@ namespace eBayScraper
         private void FindAllBuyNowWithPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -527,40 +389,16 @@ namespace eBayScraper
                         Equals("lvshipping")).FirstOrDefault().
                         InnerText.Trim(elementsToTrim).Contains("£"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
-                    statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
                 else if (amountOfItems == 0)
                 {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
                 }
             }
         }
@@ -568,62 +406,66 @@ namespace eBayScraper
         private void FindAllAuctionsWithPaidShipping(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
+
+            foreach (var Item in _productListItems)
+            {
+                if (ItemIsInPriceRange(Item))
+                {
+                    //check if item is set as a auction by checking if the html element contains the word 'bid'
+                    if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
+                        Where(node => node.GetAttributeValue("class", "").
+                        Equals("lvshipping")).FirstOrDefault().
+                        InnerText.Trim(elementsToTrim).Contains("£"))
+                    {
+                        RetreiveItems(Item);
+
+                        amountOfItems++;
+                    }
+
+                    tbstatus.Text = "Search complete " + amountOfItems + " items found.";
+                }
+                else if (amountOfItems == 0)
+                {
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
+                }
+            }
+        }
+
+        public void RetreiveItems(HtmlAgilityPack.HtmlNode Item)
+        {
             string buyingFormat = "";
             string id = "";
             string price = "";
             string title = "";
             string shippingPrice = "";
 
-            foreach (var Item in _productListItems)
-            {
-                if (ItemIsInPriceRange(Item))
-                {
-                    if (ItemIsInPriceRange(Item))
-                    {
-                        //check if item is set as a auction by checking if the html element contains the word 'bid'
-                        if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
-                            Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && Item.Descendants("li").
-                            Where(node => node.GetAttributeValue("class", "").
-                            Equals("lvshipping")).FirstOrDefault().
-                            InnerText.Trim(elementsToTrim).Contains("£"))
-                        {
-                            //product id
-                            id = Item.GetAttributeValue("listingid", "");
+            //product id
+            id = Item.GetAttributeValue("listingid", "");
 
-                            //product title
-                            title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                            Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
+            //product title
+            title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
+            Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
 
-                            //product price
-                            price = "" + Regex.Match(Item.Descendants("li").
-                            Where(node => node.GetAttributeValue("class", "").
-                            Equals("lvprice prc")).FirstOrDefault().
-                            InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+            //product price
+            price = "" + Regex.Match(Item.Descendants("li").
+            Where(node => node.GetAttributeValue("class", "").
+            Equals("lvprice prc")).FirstOrDefault().
+            InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
 
-                            //shippping format
-                            shippingPrice = Item.Descendants("li").
-                            Where(node => node.GetAttributeValue("class", "").
-                            Equals("lvshipping")).FirstOrDefault().
-                            InnerText.Trim(elementsToTrim);
+            //shippping format
+            shippingPrice = Item.Descendants("li").
+            Where(node => node.GetAttributeValue("class", "").
+            Equals("lvshipping")).FirstOrDefault().
+            InnerText.Trim(elementsToTrim);
 
-                            //buying format
-                            buyingFormat = Item.Descendants("li").
-                            Where(node => node.GetAttributeValue("class", "").
-                            Equals("lvformat")).FirstOrDefault().
-                            InnerText.Trim(elementsToTrim);
+            //buying format
+            buyingFormat = Item.Descendants("li").
+            Where(node => node.GetAttributeValue("class", "").
+            Equals("lvformat")).FirstOrDefault().
+            InnerText.Trim(elementsToTrim);
 
-                            PrintAllData(id, title, buyingFormat, price, shippingPrice);
-                            amountOfItems++;
-                        }
-
-                        statustxtbx.Text = "Search complete " + amountOfItems + " items found.";
-                    }
-                }
-                else if (amountOfItems == 0)
-                {
-                    statustxtbx.Text = "Search failed, no items in that price range exist in that page.";
-                }
-            }
+            PrintAllData(id, title, buyingFormat, price, shippingPrice);
         }
 
         /// <summary>
@@ -636,46 +478,47 @@ namespace eBayScraper
         /// <param name="shippingPrice"></param>
         private void PrintAllData(String id, string title, string buyingFormat, string price, string shippingPrice)
         {
-            resultsBx.Text += "ID: " + id;
-            resultsBx.Text += Environment.NewLine;
+            tbresult.Text += "ID: " + id;
+            tbresult.Text += Environment.NewLine;
 
             if (title.Contains("listing"))
             {
-                resultsBx.Text += "TITLE: " + title.Replace("New listing", "").Replace("		", "").Replace("\n", "");
+                tbresult.Text += "TITLE: " + title.Replace("New listing", "").Replace("		", "").Replace("\n", "");
             }
             else
             {
-                resultsBx.Text += "TITLE: " + title;
-
-
+                tbresult.Text += "TITLE: " + title;
             }
-            resultsBx.Text += Environment.NewLine;
 
-            resultsBx.Text += "PRICE: £" + price;
-            resultsBx.Text += Environment.NewLine;
+            tbresult.Text += Environment.NewLine;
+
+            tbresult.Text += "PRICE: £" + price;
+            tbresult.Text += Environment.NewLine;
 
             if (shippingPrice.Contains("£"))
             {
-                resultsBx.Text += "SHIPPING: " + shippingPrice.Substring(2, 6);
+                tbresult.Text += "SHIPPING: " + shippingPrice.Substring(2, 6);
             }
             else
             {
-                resultsBx.Text += "SHIPPING: " + shippingPrice;
+                tbresult.Text += "SHIPPING: " + shippingPrice;
             }
 
-            resultsBx.Text += Environment.NewLine;
+            tbresult.Text += Environment.NewLine;
 
             //fixes a bug where if the item was 'buy it now' it would not display anything
             if (!buyingFormat.Contains("bid"))
             {
-                buyingFormat += "Buy It Now";
+                tbresult.Text += "BUYING FORMAT: Buy It Now";
             }
+            else
+            {
+                tbresult.Text += "BUYING FORMAT: Auction, " + buyingFormat.Replace("			", " ");
+            }
+            tbresult.Text += Environment.NewLine;
 
-            resultsBx.Text += "BUYING FORMAT: " + buyingFormat.Replace("			", " ");
-            resultsBx.Text += Environment.NewLine;
-
-            resultsBx.Text += Environment.NewLine;
-            resultsBx.Text += Environment.NewLine;
+            tbresult.Text += Environment.NewLine;
+            tbresult.Text += Environment.NewLine;
         }
 
         private bool ItemIsInPriceRange(HtmlAgilityPack.HtmlNode item)
@@ -685,14 +528,27 @@ namespace eBayScraper
                   Equals("lvprice prc")).FirstOrDefault().
                   InnerText.Trim(elementsToTrim), @"\d+.\d+").ToString();
 
-            if ((double.Parse(itemPrice) >= minPricebar.Value && double.Parse(itemPrice) <= maxPricebar.Value) || anypricerb.Checked)
+            if (tbMinPrice.Text != "" && tbMaxPrice.Text != "")
             {
+                if (!Regex.Match(tbMaxPrice.Text, "[a-zA-Z]").Success && !Regex.Match(tbMinPrice.Text, "[a-zA-Z]").Success)
+                {
+                    tbMaxPrice.Text = Regex.Replace(tbMaxPrice.Text, @"\s+", "");
+                    tbMinPrice.Text = Regex.Replace(tbMinPrice.Text, @"\s+", "");
+
+                    if ((double.Parse(itemPrice) >= Convert.ToInt32(tbMinPrice.Text) && double.Parse(itemPrice) <= Convert.ToInt32(tbMaxPrice.Text)))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return true;
         }
 
         /// <summary>
@@ -702,16 +558,23 @@ namespace eBayScraper
         /// <param name="e"></param>
         private void goBtn_Click(object sender, EventArgs e)
         {
-            url = searchBx.Text;
+            //the entered url
+            url = tbsearch.Text;
 
             //if the url is empty, inform the user
             if (!URLIsValid(url))
             {
-                statustxtbx.Text = "Invalid Search.";
+                tbstatus.Text = "Invalid Search.";
             }
+            //in the ebay url, the characters 'itm' are within a link for a product listing
+            else if (url.Contains("itm"))
+            {
+                tbstatus.Text = "Only enter an advanced eBay search, not a specific listing.";
+            }
+            //if the url is valid, begin the search
             else if (URLIsValid(url))
             {
-                statustxtbx.Text = "Scraping in progress, please wait...";
+                tbstatus.Text = "Scraping in progress, please wait...";
                 GetHTML();
             }
         }
@@ -723,10 +586,10 @@ namespace eBayScraper
         /// <returns></returns>
         public bool URLIsValid(string url)
         {
-            Uri result;
+            //checks if the url is valid 
+            bool tryCreateResult = Uri.TryCreate(url, UriKind.Absolute, out Uri result);
 
-            bool tryCreateResult = Uri.TryCreate(url, UriKind.Absolute, out result);
-
+            //if the result is null and the bool above is true, the url is valid
             if (tryCreateResult == true && result != null)
             {
                 return true;
@@ -737,21 +600,34 @@ namespace eBayScraper
             }
         }
 
-        private void searchBx_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Triggers when the search textbox is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbsearch_Click(object sender, EventArgs e)
         {
-            if (searchBx.Text == URLPROMPT || !URLIsValid(url))
+            //if the search text box's text is equal to the url prompt or is invalided, clear it
+            if (tbsearch.Text == URLPROMPT || !URLIsValid(url))
             {
-                searchBx.Text = "";
+                tbsearch.Text = "";
             }
         }
 
-        private void searchBx_Leave(object sender, EventArgs e)
+        /// <summary>
+        /// Triggers when focus leaves the search text box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbsearch_Leave(object sender, EventArgs e)
         {
-            if (searchBx.Text.Length == 0)
+            //if the string in the text box is empty, reset it to the url prompt
+            if (tbsearch.Text.Length == 0)
             {
-                searchBx.Text = URLPROMPT;
+                tbsearch.Text = URLPROMPT;
             }
         }
+
 
         private void helpPicbx_Click(object sender, EventArgs e)
         {
@@ -761,7 +637,7 @@ namespace eBayScraper
 
         private void exportbtn_Click(object sender, EventArgs e)
         {
-            if (resultsBx.Text.Length != 0)
+            if (tbresult.Text.Length != 0)
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -771,7 +647,7 @@ namespace eBayScraper
                     using (Stream s = File.Open(saveFileDialog.FileName, FileMode.CreateNew))
                     using (StreamWriter streamWriter = new StreamWriter(s))
                     {
-                        streamWriter.Write(resultsBx.Text);
+                        streamWriter.Write(tbresult.Text);
                     }
                 }
             }
@@ -781,48 +657,78 @@ namespace eBayScraper
             }
         }
 
-        private void minPricebar_Scroll(object sender, EventArgs e)
-        {
-    
-        }
-
-        private void maxPricebar_Scroll(object sender, EventArgs e)
-        {
-  
-        }
-
+        /// <summary>
+        /// Triggers when the mouse enters the help icon's picture box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void helpPicbx_MouseEnter(object sender, EventArgs e)
         {
+            //change it's image to show it is highlighted
             helpPicbx.Image = Properties.Resources.selectedqhelpicon;
         }
 
+        /// <summary>
+        /// Triggers when the mosue leaves the help icon's picture box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void helpPicbx_MouseLeave(object sender, EventArgs e)
         {
+            //change its image to show it is not highlighted
             helpPicbx.Image = Properties.Resources.notselectedqhelpicon;
         }
 
+        /// <summary>
+        /// Triggers when the max price bar's value is changed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void maxPricebar_ValueChanged(object sender, EventArgs e)
         {
+            //if the value of the max price bar is greaters than the min price bar, allow its value to change
             if (maxPricebar.Value > minPricebar.Value)
             {
-                maxPricebx.Text = "Maximum Price: £" + maxPricebar.Value;
+                tbMaxPrice.Text = "Maximum Price: £" + maxPricebar.Value;
             }
+            //if the max price bar's value is lower than the min, disallow it from changing
             else
             {
                 maxPricebar.Value = minPricebar.Value;
             }
         }
 
+        /// <summary>
+        /// Triggers when the value of the min price bar is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void minPricebar_ValueChanged(object sender, EventArgs e)
         {
+            //if the value of the min price bar is less than the value of the max price bar, allow it the alter 
             if (minPricebar.Value < maxPricebar.Value)
             {
-                minPricebx.Text = "Minimum Price: £" + minPricebar.Value;
+                tbMinPrice.Text = "Minimum Price: £" + minPricebar.Value;
             }
+            //if the value of the min price bar is more than the max price bar's value, stop it from moving
             else
             {
                 minPricebar.Value = maxPricebar.Value;
             }
+        }
+
+        /// <summary>
+        /// Resets all adjustable elements in the form when the reset button is clicked 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void resetbtn_Click(object sender, EventArgs e)
+        {
+            rbanyprice.Checked = true;
+            rbauctionandbuy.Checked = true;
+            rbfreeandpaid.Checked = true;
+            maxPricebar.Value = maxPricebar.Maximum;
+            minPricebar.Value = minPricebar.Minimum;
         }
     }
 }
