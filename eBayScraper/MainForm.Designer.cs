@@ -90,7 +90,7 @@ namespace eBayScraper
             // 
             this.helpPicbx.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("helpPicbx.BackgroundImage")));
             this.helpPicbx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.helpPicbx.Location = new System.Drawing.Point(774, 12);
+            this.helpPicbx.Location = new System.Drawing.Point(785, 8);
             this.helpPicbx.Name = "helpPicbx";
             this.helpPicbx.Size = new System.Drawing.Size(64, 66);
             this.helpPicbx.TabIndex = 3;
@@ -101,7 +101,7 @@ namespace eBayScraper
             // 
             // goBtn
             // 
-            this.goBtn.Location = new System.Drawing.Point(676, 403);
+            this.goBtn.Location = new System.Drawing.Point(687, 392);
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(162, 25);
             this.goBtn.TabIndex = 1;
@@ -126,16 +126,16 @@ namespace eBayScraper
             this.checkboxpnl.Controls.Add(this.rbauctionandbuy);
             this.checkboxpnl.Controls.Add(this.rbbuyitnow);
             this.checkboxpnl.Controls.Add(this.rbauctiononly);
-            this.checkboxpnl.Location = new System.Drawing.Point(676, 95);
+            this.checkboxpnl.Location = new System.Drawing.Point(673, 95);
             this.checkboxpnl.Name = "checkboxpnl";
-            this.checkboxpnl.Size = new System.Drawing.Size(162, 102);
+            this.checkboxpnl.Size = new System.Drawing.Size(187, 102);
             this.checkboxpnl.TabIndex = 6;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(15, 3);
+            this.label1.Location = new System.Drawing.Point(26, 4);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 15);
             this.label1.TabIndex = 7;
@@ -175,7 +175,7 @@ namespace eBayScraper
             // 
             // exportbtn
             // 
-            this.exportbtn.Location = new System.Drawing.Point(676, 434);
+            this.exportbtn.Location = new System.Drawing.Point(687, 423);
             this.exportbtn.Name = "exportbtn";
             this.exportbtn.Size = new System.Drawing.Size(162, 25);
             this.exportbtn.TabIndex = 8;
@@ -191,16 +191,16 @@ namespace eBayScraper
             this.panel1.Controls.Add(this.rbfreeandpaid);
             this.panel1.Controls.Add(this.rbpaidonly);
             this.panel1.Controls.Add(this.rbfreeonly);
-            this.panel1.Location = new System.Drawing.Point(676, 204);
+            this.panel1.Location = new System.Drawing.Point(673, 204);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(162, 102);
+            this.panel1.Size = new System.Drawing.Size(187, 102);
             this.panel1.TabIndex = 10;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(19, 2);
+            this.label2.Location = new System.Drawing.Point(26, 3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 15);
             this.label2.TabIndex = 7;
@@ -251,14 +251,14 @@ namespace eBayScraper
             // 
             // tbMinPrice
             // 
-            this.tbMinPrice.Location = new System.Drawing.Point(785, 358);
+            this.tbMinPrice.Location = new System.Drawing.Point(785, 354);
             this.tbMinPrice.Name = "tbMinPrice";
             this.tbMinPrice.Size = new System.Drawing.Size(78, 23);
             this.tbMinPrice.TabIndex = 13;
             // 
             // tbMaxPrice
             // 
-            this.tbMaxPrice.Location = new System.Drawing.Point(785, 329);
+            this.tbMaxPrice.Location = new System.Drawing.Point(785, 325);
             this.tbMaxPrice.Name = "tbMaxPrice";
             this.tbMaxPrice.Size = new System.Drawing.Size(78, 23);
             this.tbMaxPrice.TabIndex = 14;
@@ -324,7 +324,7 @@ namespace eBayScraper
             // 
             // resetbtn
             // 
-            this.resetbtn.Location = new System.Drawing.Point(676, 465);
+            this.resetbtn.Location = new System.Drawing.Point(687, 454);
             this.resetbtn.Name = "resetbtn";
             this.resetbtn.Size = new System.Drawing.Size(162, 25);
             this.resetbtn.TabIndex = 16;
@@ -337,7 +337,7 @@ namespace eBayScraper
             this.lMaxPrice.AutoSize = true;
             this.lMaxPrice.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lMaxPrice.ForeColor = System.Drawing.Color.White;
-            this.lMaxPrice.Location = new System.Drawing.Point(664, 329);
+            this.lMaxPrice.Location = new System.Drawing.Point(664, 325);
             this.lMaxPrice.Name = "lMaxPrice";
             this.lMaxPrice.Size = new System.Drawing.Size(114, 20);
             this.lMaxPrice.TabIndex = 17;
@@ -348,7 +348,7 @@ namespace eBayScraper
             this.lMinPrice.AutoSize = true;
             this.lMinPrice.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lMinPrice.ForeColor = System.Drawing.Color.White;
-            this.lMinPrice.Location = new System.Drawing.Point(664, 361);
+            this.lMinPrice.Location = new System.Drawing.Point(664, 357);
             this.lMinPrice.Name = "lMinPrice";
             this.lMinPrice.Size = new System.Drawing.Size(111, 20);
             this.lMinPrice.TabIndex = 18;

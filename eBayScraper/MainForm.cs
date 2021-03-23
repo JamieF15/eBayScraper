@@ -79,8 +79,8 @@ namespace eBayScraper
             //populate the list with html nodes that have attributes values that contaim the term "item"
             productListItems = products[0].Descendants("li").Where(node => node.GetAttributeValue("id", "").Contains("item")).ToList();
 
-         //   var productListItem = products[0].Descendants();
-   
+            //   var productListItem = products[0].Descendants();
+
             //based on the radio button's clicked, perform the appropriate search
             if (rbauctiononly.Checked && rbfreeandpaid.Checked)
             {
@@ -174,11 +174,11 @@ namespace eBayScraper
                 }
                 else if (amountOfItems == 0)
                 {
-                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
+                    tbstatus.Text = "Search failed, no items were found in that search";
                 }
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -561,21 +561,37 @@ namespace eBayScraper
             //the entered url
             url = tbsearch.Text;
 
-            //if the url is empty, inform the user
-            if (!URLIsValid(url))
+            if (tbMinPrice.Text != "" && tbMinPrice.Text != "")
             {
-                tbstatus.Text = "Invalid Search.";
+                if (Regex.Match(tbMinPrice.Text, @"[a-zA-z]+").Success || Regex.Match(tbMaxPrice.Text, @"[a-zA-Z]+").Success || Regex.Match(tbMinPrice.Text, @"/[^\p{L}\d\s@#]/u+").Success)
+                {
+                    MessageBox.Show("Letters cannot be in the price filters.");
+                    return;
+                }
+                else if (Convert.ToInt32(tbMaxPrice.Text) <= Convert.ToInt32(tbMinPrice.Text))
+                {
+                    MessageBox.Show("The filter for the maximum price cannot be lower than the minimum price.");
+                    return;
+                }
             }
-            //in the ebay url, the characters 'itm' are within a link for a product listing
-            else if (url.Contains("itm"))
+
             {
-                tbstatus.Text = "Only enter an advanced eBay search, not a specific listing.";
-            }
-            //if the url is valid, begin the search
-            else if (URLIsValid(url))
-            {
-                tbstatus.Text = "Scraping in progress, please wait...";
-                GetHTML();
+                //if the url is empty, inform the user
+                if (!URLIsValid(url))
+                {
+                    tbstatus.Text = "Invalid Search.";
+                }
+                //in the ebay url, the characters 'itm' are within a link for a product listing
+                else if (url.Contains("itm"))
+                {
+                    tbstatus.Text = "Only enter an advanced eBay search, not a specific listing.";
+                }
+                //if the url is valid, begin the search
+                else if (URLIsValid(url))
+                {
+                    tbstatus.Text = "Scraping in progress, please wait...";
+                    GetHTML();
+                }
             }
         }
 
@@ -627,7 +643,6 @@ namespace eBayScraper
                 tbsearch.Text = URLPROMPT;
             }
         }
-
 
         private void helpPicbx_Click(object sender, EventArgs e)
         {
@@ -727,8 +742,9 @@ namespace eBayScraper
             rbanyprice.Checked = true;
             rbauctionandbuy.Checked = true;
             rbfreeandpaid.Checked = true;
-            maxPricebar.Value = maxPricebar.Maximum;
-            minPricebar.Value = minPricebar.Minimum;
+
+            tbMaxPrice.Text = "";
+            tbMinPrice.Text = "";
         }
     }
 }
