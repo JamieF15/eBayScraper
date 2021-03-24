@@ -46,23 +46,14 @@ namespace eBayScraper
             this.rbfreeandpaid = new System.Windows.Forms.RadioButton();
             this.rbpaidonly = new System.Windows.Forms.RadioButton();
             this.rbfreeonly = new System.Windows.Forms.RadioButton();
-            this.minPricebar = new System.Windows.Forms.TrackBar();
             this.tbMinPrice = new System.Windows.Forms.TextBox();
             this.tbMaxPrice = new System.Windows.Forms.TextBox();
-            this.maxPricebar = new System.Windows.Forms.TrackBar();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.rbanyprice = new System.Windows.Forms.RadioButton();
-            this.rbpricedefined = new System.Windows.Forms.RadioButton();
             this.resetbtn = new System.Windows.Forms.Button();
             this.lMaxPrice = new System.Windows.Forms.Label();
             this.lMinPrice = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).BeginInit();
             this.checkboxpnl.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.minPricebar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxPricebar)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbsearch
@@ -238,17 +229,6 @@ namespace eBayScraper
             this.rbfreeonly.Text = "Free Only";
             this.rbfreeonly.UseVisualStyleBackColor = true;
             // 
-            // minPricebar
-            // 
-            this.minPricebar.Location = new System.Drawing.Point(25, 430);
-            this.minPricebar.Maximum = 9999;
-            this.minPricebar.Name = "minPricebar";
-            this.minPricebar.Size = new System.Drawing.Size(422, 45);
-            this.minPricebar.TabIndex = 11;
-            this.minPricebar.TickFrequency = 9999;
-            this.minPricebar.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.minPricebar.ValueChanged += new System.EventHandler(this.minPricebar_ValueChanged);
-            // 
             // tbMinPrice
             // 
             this.tbMinPrice.Location = new System.Drawing.Point(785, 354);
@@ -262,65 +242,6 @@ namespace eBayScraper
             this.tbMaxPrice.Name = "tbMaxPrice";
             this.tbMaxPrice.Size = new System.Drawing.Size(78, 23);
             this.tbMaxPrice.TabIndex = 14;
-            // 
-            // maxPricebar
-            // 
-            this.maxPricebar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.maxPricebar.LargeChange = 1;
-            this.maxPricebar.Location = new System.Drawing.Point(39, 442);
-            this.maxPricebar.Maximum = 10000;
-            this.maxPricebar.Minimum = 1;
-            this.maxPricebar.Name = "maxPricebar";
-            this.maxPricebar.Size = new System.Drawing.Size(422, 45);
-            this.maxPricebar.TabIndex = 15;
-            this.maxPricebar.TickFrequency = 10;
-            this.maxPricebar.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.maxPricebar.Value = 9999;
-            this.maxPricebar.ValueChanged += new System.EventHandler(this.maxPricebar_ValueChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.rbanyprice);
-            this.panel2.Controls.Add(this.rbpricedefined);
-            this.panel2.Location = new System.Drawing.Point(70, 430);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(162, 69);
-            this.panel2.TabIndex = 11;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(47, 2);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 15);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Price Range";
-            // 
-            // rbanyprice
-            // 
-            this.rbanyprice.AutoSize = true;
-            this.rbanyprice.Checked = true;
-            this.rbanyprice.Location = new System.Drawing.Point(5, 20);
-            this.rbanyprice.Name = "rbanyprice";
-            this.rbanyprice.Size = new System.Drawing.Size(46, 19);
-            this.rbanyprice.TabIndex = 9;
-            this.rbanyprice.TabStop = true;
-            this.rbanyprice.Text = "Any";
-            this.rbanyprice.UseVisualStyleBackColor = true;
-            // 
-            // rbpricedefined
-            // 
-            this.rbpricedefined.AutoSize = true;
-            this.rbpricedefined.Location = new System.Drawing.Point(5, 45);
-            this.rbpricedefined.Name = "rbpricedefined";
-            this.rbpricedefined.Size = new System.Drawing.Size(101, 19);
-            this.rbpricedefined.TabIndex = 7;
-            this.rbpricedefined.Text = "Defined Below";
-            this.rbpricedefined.UseVisualStyleBackColor = true;
             // 
             // resetbtn
             // 
@@ -363,11 +284,8 @@ namespace eBayScraper
             this.Controls.Add(this.lMinPrice);
             this.Controls.Add(this.lMaxPrice);
             this.Controls.Add(this.resetbtn);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.maxPricebar);
             this.Controls.Add(this.tbMaxPrice);
             this.Controls.Add(this.tbMinPrice);
-            this.Controls.Add(this.minPricebar);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.exportbtn);
             this.Controls.Add(this.checkboxpnl);
@@ -378,7 +296,6 @@ namespace eBayScraper
             this.Controls.Add(this.tbsearch);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -388,10 +305,6 @@ namespace eBayScraper
             this.checkboxpnl.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.minPricebar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxPricebar)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,14 +328,8 @@ namespace eBayScraper
         private System.Windows.Forms.RadioButton rbfreeandpaid;
         private System.Windows.Forms.RadioButton rbpaidonly;
         private System.Windows.Forms.RadioButton rbfreeonly;
-        private System.Windows.Forms.TrackBar minPricebar;
         private System.Windows.Forms.TextBox tbMinPrice;
         private System.Windows.Forms.TextBox tbMaxPrice;
-        private System.Windows.Forms.TrackBar maxPricebar;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RadioButton rbanyprice;
-        private System.Windows.Forms.RadioButton rbpricedefined;
         private System.Windows.Forms.Button resetbtn;
         private System.Windows.Forms.Label lMaxPrice;
         private System.Windows.Forms.Label lMinPrice;

@@ -152,7 +152,7 @@ namespace eBayScraper
                         price = "" + Regex.Match(Item.Descendants("li").
                         Where(node => node.GetAttributeValue("class", "").
                         Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+                        InnerText.Trim(elementsToTrim), @"\d+.\d+");
 
                         //shippping format
                         shippingPrice = Item.Descendants("li").
@@ -209,7 +209,7 @@ namespace eBayScraper
                         price = "" + Regex.Match(Item.Descendants("li").
                         Where(node => node.GetAttributeValue("class", "").
                         Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+                        InnerText.Trim(elementsToTrim), @"\d+.\d+");
 
                         //shippping format
                         shippingPrice = Item.Descendants("li").
@@ -451,7 +451,7 @@ namespace eBayScraper
             price = "" + Regex.Match(Item.Descendants("li").
             Where(node => node.GetAttributeValue("class", "").
             Equals("lvprice prc")).FirstOrDefault().
-            InnerText.Trim('\r', '\n', '\t'), @"\d+.\d+");
+            InnerText.Trim(elementsToTrim), @"\d+.\d+");
 
             //shippping format
             shippingPrice = Item.Descendants("li").
@@ -483,13 +483,12 @@ namespace eBayScraper
 
             if (title.Contains("listing"))
             {
-                tbresult.Text += "TITLE: " + title.Replace("New listing", "").Replace("		", "").Replace("\n", "");
+                tbresult.Text += "TITLE: " + title.Replace("New listing", string.Empty).Replace("		", string.Empty).Replace(Environment.NewLine, string.Empty);
             }
             else
             {
                 tbresult.Text += "TITLE: " + title;
             }
-
             tbresult.Text += Environment.NewLine;
 
             tbresult.Text += "PRICE: £" + price;
@@ -503,7 +502,6 @@ namespace eBayScraper
             {
                 tbresult.Text += "SHIPPING: " + shippingPrice;
             }
-
             tbresult.Text += Environment.NewLine;
 
             //fixes a bug where if the item was 'buy it now' it would not display anything
@@ -575,24 +573,24 @@ namespace eBayScraper
                 }
             }
 
+
+            //if the url is empty, inform the user
+            if (!URLIsValid(url))
             {
-                //if the url is empty, inform the user
-                if (!URLIsValid(url))
-                {
-                    tbstatus.Text = "Invalid Search.";
-                }
-                //in the ebay url, the characters 'itm' are within a link for a product listing
-                else if (url.Contains("itm"))
-                {
-                    tbstatus.Text = "Only enter an advanced eBay search, not a specific listing.";
-                }
-                //if the url is valid, begin the search
-                else if (URLIsValid(url))
-                {
-                    tbstatus.Text = "Scraping in progress, please wait...";
-                    GetHTML();
-                }
+                tbstatus.Text = "Invalid Search.";
             }
+            //in the ebay url, the characters 'itm' are within a link for a product listing
+            else if (url.Contains("itm"))
+            {
+                tbstatus.Text = "Only enter an advanced eBay search, not a specific listing.";
+            }
+            //if the url is valid, begin the search
+            else if (URLIsValid(url))
+            {
+                tbstatus.Text = "Scraping in progress, please wait...";
+                GetHTML();
+            }
+
         }
 
         /// <summary>
@@ -606,7 +604,7 @@ namespace eBayScraper
             bool tryCreateResult = Uri.TryCreate(url, UriKind.Absolute, out Uri result);
 
             //if the result is null and the bool above is true, the url is valid
-            if (tryCreateResult == true && result != null)
+            if (tryCreateResult == true && result != null && url.Contains("https://www.ebay.co.uk/"))
             {
                 return true;
             }
@@ -659,10 +657,29 @@ namespace eBayScraper
                 saveFileDialog.DefaultExt = "txt";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (Stream s = File.Open(saveFileDialog.FileName, FileMode.CreateNew))
-                    using (StreamWriter streamWriter = new StreamWriter(s))
+                    try
                     {
-                        streamWriter.Write(tbresult.Text);
+                        using (Stream s = File.Open(saveFileDialog.FileName, FileMode.CreateNew))
+                        using (StreamWriter streamWriter = new StreamWriter(s))
+                        {
+                           // tbresult.Text.Replace(Environment.NewLine, string.Empty);
+
+                            streamWriter.Write(tbresult.Text);
+                        }
+                    }
+                    catch (IOException)
+                    {
+                        string filePath = Path.GetFullPath(saveFileDialog.FileName);
+                        bool fileExists = File.Exists(filePath);
+
+                        if (fileExists)
+                        {
+                            using (StreamWriter streamWriter = new StreamWriter(filePath))
+                            {
+                                streamWriter.Write(tbresult.Text);
+                            }
+
+                        }
                     }
                 }
             }
@@ -695,51 +712,12 @@ namespace eBayScraper
         }
 
         /// <summary>
-        /// Triggers when the max price bar's value is changed 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void maxPricebar_ValueChanged(object sender, EventArgs e)
-        {
-            //if the value of the max price bar is greaters than the min price bar, allow its value to change
-            if (maxPricebar.Value > minPricebar.Value)
-            {
-                tbMaxPrice.Text = "Maximum Price: £" + maxPricebar.Value;
-            }
-            //if the max price bar's value is lower than the min, disallow it from changing
-            else
-            {
-                maxPricebar.Value = minPricebar.Value;
-            }
-        }
-
-        /// <summary>
-        /// Triggers when the value of the min price bar is changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void minPricebar_ValueChanged(object sender, EventArgs e)
-        {
-            //if the value of the min price bar is less than the value of the max price bar, allow it the alter 
-            if (minPricebar.Value < maxPricebar.Value)
-            {
-                tbMinPrice.Text = "Minimum Price: £" + minPricebar.Value;
-            }
-            //if the value of the min price bar is more than the max price bar's value, stop it from moving
-            else
-            {
-                minPricebar.Value = maxPricebar.Value;
-            }
-        }
-
-        /// <summary>
         /// Resets all adjustable elements in the form when the reset button is clicked 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void resetbtn_Click(object sender, EventArgs e)
         {
-            rbanyprice.Checked = true;
             rbauctionandbuy.Checked = true;
             rbfreeandpaid.Checked = true;
 
