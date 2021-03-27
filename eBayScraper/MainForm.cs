@@ -127,11 +127,6 @@ namespace eBayScraper
         private void FindAllAuctions(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -141,32 +136,8 @@ namespace eBayScraper
                     if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
                         Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid"))
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
@@ -186,11 +157,6 @@ namespace eBayScraper
         private void FindAllItems(List<HtmlAgilityPack.HtmlNode> _productListItems)
         {
             int amountOfItems = 0;
-            string buyingFormat = "";
-            string id = "";
-            string price = "";
-            string title = "";
-            string shippingPrice = "";
 
             foreach (var Item in _productListItems)
             {
@@ -198,32 +164,8 @@ namespace eBayScraper
                 {
                     //check if item is set as a auction by checking if the html element contains the word 'bid'
                     {
-                        //product id
-                        id = Item.GetAttributeValue("listingid", "");
+                        RetreiveItems(Item);
 
-                        //product title
-                        title = Item.Descendants("h3").Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvtitle")).FirstOrDefault().InnerText.Trim(elementsToTrim);
-
-                        //product price
-                        price = "" + Regex.Match(Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvprice prc")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim), @"\d+.\d+");
-
-                        //shippping format
-                        shippingPrice = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvshipping")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        //buying format
-                        buyingFormat = Item.Descendants("li").
-                        Where(node => node.GetAttributeValue("class", "").
-                        Equals("lvformat")).FirstOrDefault().
-                        InnerText.Trim(elementsToTrim);
-
-                        PrintAllData(id, title, buyingFormat, price, shippingPrice);
                         amountOfItems++;
                     }
 
@@ -311,6 +253,10 @@ namespace eBayScraper
 
                     tbstatus.Text = "Search complete " + amountOfItems + " items found.";
                 }
+                else if (amountOfItems == 0)
+                {
+                    tbstatus.Text = "Search failed, no items in that price range exist in that page.";
+                }
             }
         }
 
@@ -322,7 +268,6 @@ namespace eBayScraper
             {
                 if (ItemIsInPriceRange(Item))
                 {
-
                     //check if item is set as a auction by checking if the html element contains the word 'bid'
                     if (Item.Descendants("li").Where(node => node.GetAttributeValue("class", "").
                         Equals("lvformat")).FirstOrDefault().InnerText.Trim(elementsToTrim).Contains("bid") && !Item.Descendants("li").
@@ -478,7 +423,7 @@ namespace eBayScraper
         /// <param name="shippingPrice"></param>
         private void PrintAllData(String id, string title, string buyingFormat, string price, string shippingPrice)
         {
-            tbresult.Text += "ID: " + id;
+            tbresult.Text += "ID: " + System.Web.HttpUtility.HtmlDecode(id);
             tbresult.Text += Environment.NewLine;
 
             if (title.Contains("listing"))
@@ -526,24 +471,19 @@ namespace eBayScraper
                   Equals("lvprice prc")).FirstOrDefault().
                   InnerText.Trim(elementsToTrim), @"\d+.\d+").ToString();
 
-            if (tbMinPrice.Text != "" && tbMaxPrice.Text != "")
+            if (tbMinPrice.Text != "" && tbMaxPrice.Text != "" && !Regex.Match(tbMaxPrice.Text, "[a-zA-Z]").Success && !Regex.Match(tbMinPrice.Text, "[a-zA-Z]").Success || Regex.Match(tbMaxPrice.Text, "[$&+,:;=?@#|'<>.^*()%!-]").Success)
             {
-                if (!Regex.Match(tbMaxPrice.Text, "[a-zA-Z]").Success && !Regex.Match(tbMinPrice.Text, "[a-zA-Z]").Success)
+                tbMaxPrice.Text = Regex.Replace(tbMaxPrice.Text, @"\s+", "");
+                tbMinPrice.Text = Regex.Replace(tbMinPrice.Text, @"\s+", "");
+
+                if ((double.Parse(itemPrice) >= Convert.ToInt32(tbMinPrice.Text) && double.Parse(itemPrice) <= Convert.ToInt32(tbMaxPrice.Text)))
                 {
-                    tbMaxPrice.Text = Regex.Replace(tbMaxPrice.Text, @"\s+", "");
-                    tbMinPrice.Text = Regex.Replace(tbMinPrice.Text, @"\s+", "");
-
-                    if ((double.Parse(itemPrice) >= Convert.ToInt32(tbMinPrice.Text) && double.Parse(itemPrice) <= Convert.ToInt32(tbMaxPrice.Text)))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
-
-                return true;
+                else
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -561,8 +501,9 @@ namespace eBayScraper
 
             if (tbMinPrice.Text != "" && tbMinPrice.Text != "")
             {
-                if (Regex.Match(tbMinPrice.Text, @"[a-zA-z]+").Success || Regex.Match(tbMaxPrice.Text, @"[a-zA-Z]+").Success || Regex.Match(tbMinPrice.Text, @"/[^\p{L}\d\s@#]/u+").Success)
+                if (Regex.Match(tbMinPrice.Text, @"[a-zA-z]+").Success || Regex.Match(tbMaxPrice.Text, @"[a-zA-Z]+").Success)
                 {
+                    //|| Regex.Match(tbMinPrice.Text, "[\"$&+,:;=?@#|'<>.-^*()%!]").Success ||
                     MessageBox.Show("Letters cannot be in the price filters.");
                     return;
                 }
@@ -662,8 +603,6 @@ namespace eBayScraper
                         using (Stream s = File.Open(saveFileDialog.FileName, FileMode.CreateNew))
                         using (StreamWriter streamWriter = new StreamWriter(s))
                         {
-                           // tbresult.Text.Replace(Environment.NewLine, string.Empty);
-
                             streamWriter.Write(tbresult.Text);
                         }
                     }
@@ -678,7 +617,6 @@ namespace eBayScraper
                             {
                                 streamWriter.Write(tbresult.Text);
                             }
-
                         }
                     }
                 }

@@ -81,7 +81,7 @@ namespace eBayScraper
             // 
             this.helpPicbx.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("helpPicbx.BackgroundImage")));
             this.helpPicbx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.helpPicbx.Location = new System.Drawing.Point(785, 8);
+            this.helpPicbx.Location = new System.Drawing.Point(796, 12);
             this.helpPicbx.Name = "helpPicbx";
             this.helpPicbx.Size = new System.Drawing.Size(64, 66);
             this.helpPicbx.TabIndex = 3;
@@ -166,7 +166,7 @@ namespace eBayScraper
             // 
             // exportbtn
             // 
-            this.exportbtn.Location = new System.Drawing.Point(687, 423);
+            this.exportbtn.Location = new System.Drawing.Point(687, 428);
             this.exportbtn.Name = "exportbtn";
             this.exportbtn.Size = new System.Drawing.Size(162, 25);
             this.exportbtn.TabIndex = 8;
@@ -245,7 +245,7 @@ namespace eBayScraper
             // 
             // resetbtn
             // 
-            this.resetbtn.Location = new System.Drawing.Point(687, 454);
+            this.resetbtn.Location = new System.Drawing.Point(687, 465);
             this.resetbtn.Name = "resetbtn";
             this.resetbtn.Size = new System.Drawing.Size(162, 25);
             this.resetbtn.TabIndex = 16;
@@ -280,7 +280,7 @@ namespace eBayScraper
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(875, 499);
+            this.ClientSize = new System.Drawing.Size(875, 508);
             this.Controls.Add(this.lMinPrice);
             this.Controls.Add(this.lMaxPrice);
             this.Controls.Add(this.resetbtn);
