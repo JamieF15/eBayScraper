@@ -58,9 +58,10 @@ namespace eBayScraper
             // 
             // tbsearch
             // 
-            this.tbsearch.Location = new System.Drawing.Point(166, 21);
+            this.tbsearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbsearch.Location = new System.Drawing.Point(166, 17);
             this.tbsearch.Name = "tbsearch";
-            this.tbsearch.Size = new System.Drawing.Size(489, 23);
+            this.tbsearch.Size = new System.Drawing.Size(489, 29);
             this.tbsearch.TabIndex = 0;
             this.tbsearch.Click += new System.EventHandler(this.tbsearch_Click);
             this.tbsearch.Leave += new System.EventHandler(this.tbsearch_Leave);
@@ -92,11 +93,11 @@ namespace eBayScraper
             // 
             // goBtn
             // 
-            this.goBtn.Location = new System.Drawing.Point(687, 392);
+            this.goBtn.Image = ((System.Drawing.Image)(resources.GetObject("goBtn.Image")));
+            this.goBtn.Location = new System.Drawing.Point(654, 17);
             this.goBtn.Name = "goBtn";
-            this.goBtn.Size = new System.Drawing.Size(162, 25);
-            this.goBtn.TabIndex = 1;
-            this.goBtn.Text = "Search";
+            this.goBtn.Size = new System.Drawing.Size(69, 38);
+            this.goBtn.TabIndex = 9;
             this.goBtn.UseVisualStyleBackColor = true;
             this.goBtn.Click += new System.EventHandler(this.goBtn_Click);
             // 
@@ -139,7 +140,7 @@ namespace eBayScraper
             this.rbauctionandbuy.Location = new System.Drawing.Point(5, 24);
             this.rbauctionandbuy.Name = "rbauctionandbuy";
             this.rbauctionandbuy.Size = new System.Drawing.Size(151, 19);
-            this.rbauctionandbuy.TabIndex = 9;
+            this.rbauctionandbuy.TabIndex = 1;
             this.rbauctionandbuy.TabStop = true;
             this.rbauctionandbuy.Text = "Auction and Buy It Now";
             this.rbauctionandbuy.UseVisualStyleBackColor = true;
@@ -150,7 +151,7 @@ namespace eBayScraper
             this.rbbuyitnow.Location = new System.Drawing.Point(5, 74);
             this.rbbuyitnow.Name = "rbbuyitnow";
             this.rbbuyitnow.Size = new System.Drawing.Size(111, 19);
-            this.rbbuyitnow.TabIndex = 8;
+            this.rbbuyitnow.TabIndex = 3;
             this.rbbuyitnow.Text = "Buy It Now Only";
             this.rbbuyitnow.UseVisualStyleBackColor = true;
             // 
@@ -160,17 +161,18 @@ namespace eBayScraper
             this.rbauctiononly.Location = new System.Drawing.Point(5, 49);
             this.rbauctiononly.Name = "rbauctiononly";
             this.rbauctiononly.Size = new System.Drawing.Size(95, 19);
-            this.rbauctiononly.TabIndex = 7;
+            this.rbauctiononly.TabIndex = 2;
             this.rbauctiononly.Text = "Auction Only";
             this.rbauctiononly.UseVisualStyleBackColor = true;
             // 
             // exportbtn
             // 
-            this.exportbtn.Location = new System.Drawing.Point(687, 428);
+            this.exportbtn.Image = ((System.Drawing.Image)(resources.GetObject("exportbtn.Image")));
+            this.exportbtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.exportbtn.Location = new System.Drawing.Point(791, 396);
             this.exportbtn.Name = "exportbtn";
-            this.exportbtn.Size = new System.Drawing.Size(162, 25);
-            this.exportbtn.TabIndex = 8;
-            this.exportbtn.Text = "Export";
+            this.exportbtn.Size = new System.Drawing.Size(69, 38);
+            this.exportbtn.TabIndex = 10;
             this.exportbtn.UseVisualStyleBackColor = true;
             this.exportbtn.Click += new System.EventHandler(this.exportbtn_Click);
             // 
@@ -204,7 +206,7 @@ namespace eBayScraper
             this.rbfreeandpaid.Location = new System.Drawing.Point(5, 26);
             this.rbfreeandpaid.Name = "rbfreeandpaid";
             this.rbfreeandpaid.Size = new System.Drawing.Size(96, 19);
-            this.rbfreeandpaid.TabIndex = 9;
+            this.rbfreeandpaid.TabIndex = 4;
             this.rbfreeandpaid.TabStop = true;
             this.rbfreeandpaid.Text = "Free and Paid";
             this.rbfreeandpaid.UseVisualStyleBackColor = true;
@@ -215,7 +217,7 @@ namespace eBayScraper
             this.rbpaidonly.Location = new System.Drawing.Point(5, 76);
             this.rbpaidonly.Name = "rbpaidonly";
             this.rbpaidonly.Size = new System.Drawing.Size(76, 19);
-            this.rbpaidonly.TabIndex = 8;
+            this.rbpaidonly.TabIndex = 6;
             this.rbpaidonly.Text = "Paid Only";
             this.rbpaidonly.UseVisualStyleBackColor = true;
             // 
@@ -225,7 +227,7 @@ namespace eBayScraper
             this.rbfreeonly.Location = new System.Drawing.Point(5, 51);
             this.rbfreeonly.Name = "rbfreeonly";
             this.rbfreeonly.Size = new System.Drawing.Size(75, 19);
-            this.rbfreeonly.TabIndex = 7;
+            this.rbfreeonly.TabIndex = 5;
             this.rbfreeonly.Text = "Free Only";
             this.rbfreeonly.UseVisualStyleBackColor = true;
             // 
@@ -234,22 +236,22 @@ namespace eBayScraper
             this.tbMinPrice.Location = new System.Drawing.Point(785, 354);
             this.tbMinPrice.Name = "tbMinPrice";
             this.tbMinPrice.Size = new System.Drawing.Size(78, 23);
-            this.tbMinPrice.TabIndex = 13;
+            this.tbMinPrice.TabIndex = 8;
             // 
             // tbMaxPrice
             // 
             this.tbMaxPrice.Location = new System.Drawing.Point(785, 325);
             this.tbMaxPrice.Name = "tbMaxPrice";
             this.tbMaxPrice.Size = new System.Drawing.Size(78, 23);
-            this.tbMaxPrice.TabIndex = 14;
+            this.tbMaxPrice.TabIndex = 7;
             // 
             // resetbtn
             // 
-            this.resetbtn.Location = new System.Drawing.Point(687, 465);
+            this.resetbtn.Image = ((System.Drawing.Image)(resources.GetObject("resetbtn.Image")));
+            this.resetbtn.Location = new System.Drawing.Point(673, 396);
             this.resetbtn.Name = "resetbtn";
-            this.resetbtn.Size = new System.Drawing.Size(162, 25);
+            this.resetbtn.Size = new System.Drawing.Size(69, 38);
             this.resetbtn.TabIndex = 16;
-            this.resetbtn.Text = "Reset Filters";
             this.resetbtn.UseVisualStyleBackColor = true;
             this.resetbtn.Click += new System.EventHandler(this.resetbtn_Click);
             // 
@@ -280,7 +282,7 @@ namespace eBayScraper
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(875, 508);
+            this.ClientSize = new System.Drawing.Size(875, 502);
             this.Controls.Add(this.lMinPrice);
             this.Controls.Add(this.lMaxPrice);
             this.Controls.Add(this.resetbtn);

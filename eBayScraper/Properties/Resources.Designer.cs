@@ -63,6 +63,16 @@ namespace eBayScraper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ExportIcon {
+            get {
+                object obj = ResourceManager.GetObject("ExportIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap notselectedqhelpicon {
             get {
                 object obj = ResourceManager.GetObject("notselectedqhelpicon", resourceCulture);
@@ -73,9 +83,9 @@ namespace eBayScraper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap question {
+        internal static System.Drawing.Bitmap reseticon_1_30x30 {
             get {
-                object obj = ResourceManager.GetObject("question", resourceCulture);
+                object obj = ResourceManager.GetObject("reseticon_1_30x30", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +93,9 @@ namespace eBayScraper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap research {
+        internal static System.Drawing.Bitmap reseticon_20x20 {
             get {
-                object obj = ResourceManager.GetObject("research", resourceCulture);
+                object obj = ResourceManager.GetObject("reseticon_20x20", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
