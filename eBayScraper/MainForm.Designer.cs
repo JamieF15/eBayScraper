@@ -59,7 +59,7 @@ namespace eBayScraper
             // tbsearch
             // 
             this.tbsearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tbsearch.Location = new System.Drawing.Point(166, 17);
+            this.tbsearch.Location = new System.Drawing.Point(166, 22);
             this.tbsearch.Name = "tbsearch";
             this.tbsearch.Size = new System.Drawing.Size(489, 29);
             this.tbsearch.TabIndex = 0;

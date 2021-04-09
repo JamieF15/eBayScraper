@@ -50,7 +50,7 @@ namespace eBayScraper
                     //gets the html of the inputted url's webpage and stores it 
                     html = await httpClient.GetStringAsync(url);
                 }
-                catch (IOException)
+                catch (HttpRequestException)
                 {
                     //gets the html of the inputted url's webpage and stores it 
                     GetHTML();
@@ -534,7 +534,7 @@ namespace eBayScraper
 
         private bool StringHasSpecialChars(String s)
         {
-            string specialChars = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,";
+            string specialChars = @"@\|!#$%&/()=?»«@£§€{}.-;'<>_,";
 
             foreach (var letter in specialChars)
             {
@@ -602,20 +602,36 @@ namespace eBayScraper
             //the entered url
             url = tbsearch.Text;
 
-            if (Regex.Match(tbMinPrice.Text, @"[a-zA-z]+").Success ||
-            Regex.Match(tbMaxPrice.Text, @"[a-zA-Z]+").Success ||
-            !StringHasSpecialChars(tbMaxPrice.Text) ||
-            !StringHasSpecialChars(tbMinPrice.Text))
+            if (tbMaxPrice.Text == "" || tbMinPrice.Text == "")
             {
-                MessageBox.Show("Letters or special characters cannot be in the price filters.");
-                return;
-            }
-            else if (Math.Truncate(Convert.ToDecimal(tbMaxPrice.Text)) <= Math.Truncate(Convert.ToDecimal(tbMinPrice.Text)))
-            {
-                MessageBox.Show("The filter for the maximum price cannot be lower than the minimum price.");
-                return;
-            }
+                // tbstatus.Text = "Enter a number in both price filters";
 
+
+                checkURL();
+            }
+            else
+            {
+                if (Regex.Match(tbMinPrice.Text, @"[a-zA-z]+").Success ||
+                Regex.Match(tbMaxPrice.Text, @"[a-zA-Z]+").Success ||
+                StringHasSpecialChars(tbMaxPrice.Text) ||
+                StringHasSpecialChars(tbMinPrice.Text))
+                {
+                    MessageBox.Show("Letters or special characters cannot be in the price filters.");
+                    return;
+                }
+                else if (Math.Truncate(Convert.ToDecimal(tbMaxPrice.Text)) <= Math.Truncate(Convert.ToDecimal(tbMinPrice.Text)))
+                {
+                    MessageBox.Show("The filter for the maximum price cannot be lower than the minimum price.");
+                    return;
+                }
+
+                checkURL();
+
+            }
+        }
+
+        void checkURL()
+        {
             //if the url is empty, inform the user
             if (!URLIsValid(url))
             {
@@ -627,7 +643,7 @@ namespace eBayScraper
                 tbstatus.Text = "Only enter an advanced eBay search, not a specific listing.";
             }
             //checks if the url is from a normal search
-            else if (!url.Contains("ipg"))
+            else if (tbsearch.Text.Length < 150)
             {
                 tbstatus.Text = "Only enter an advanced eBay search, not a normal search.";
             }
