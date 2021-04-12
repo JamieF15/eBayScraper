@@ -51,6 +51,7 @@ namespace eBayScraper
             this.resetbtn = new System.Windows.Forms.Button();
             this.lMaxPrice = new System.Windows.Forms.Label();
             this.lMinPrice = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.helpPicbx)).BeginInit();
             this.checkboxpnl.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -169,7 +170,7 @@ namespace eBayScraper
             // 
             this.exportbtn.Image = ((System.Drawing.Image)(resources.GetObject("exportbtn.Image")));
             this.exportbtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exportbtn.Location = new System.Drawing.Point(791, 396);
+            this.exportbtn.Location = new System.Drawing.Point(737, 401);
             this.exportbtn.Name = "exportbtn";
             this.exportbtn.Size = new System.Drawing.Size(69, 38);
             this.exportbtn.TabIndex = 10;
@@ -248,7 +249,7 @@ namespace eBayScraper
             // resetbtn
             // 
             this.resetbtn.Image = ((System.Drawing.Image)(resources.GetObject("resetbtn.Image")));
-            this.resetbtn.Location = new System.Drawing.Point(673, 396);
+            this.resetbtn.Location = new System.Drawing.Point(662, 401);
             this.resetbtn.Name = "resetbtn";
             this.resetbtn.Size = new System.Drawing.Size(69, 38);
             this.resetbtn.TabIndex = 16;
@@ -277,12 +278,23 @@ namespace eBayScraper
             this.lMinPrice.TabIndex = 18;
             this.lMinPrice.Text = "Minimum Price:";
             // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(812, 401);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(69, 38);
+            this.btnExit.TabIndex = 19;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(875, 502);
+            this.ClientSize = new System.Drawing.Size(886, 502);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lMinPrice);
             this.Controls.Add(this.lMaxPrice);
             this.Controls.Add(this.resetbtn);
@@ -335,6 +347,7 @@ namespace eBayScraper
         private System.Windows.Forms.Button resetbtn;
         private System.Windows.Forms.Label lMaxPrice;
         private System.Windows.Forms.Label lMinPrice;
+        private System.Windows.Forms.Button btnExit;
     }
 }
 

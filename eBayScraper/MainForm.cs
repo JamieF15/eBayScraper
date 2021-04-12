@@ -532,12 +532,20 @@ namespace eBayScraper
         }
 
 
+        /// <summary>
+        /// Checks if the string contains special characters
+        /// </summary>
+        /// <param name="s">The string being checked</param>
+        /// <returns></returns>
         private bool StringHasSpecialChars(String s)
         {
+            //special characters to check for
             string specialChars = @"@\|!#$%&/()=?»«@£§€{}.-;'<>_,";
 
+            //loop through the special characters
             foreach (var letter in specialChars)
             {
+                //if the string contains a special character, if not, return false
                 if (s.Contains(letter))
                 {
                     return true;
@@ -800,6 +808,17 @@ namespace eBayScraper
 
             tbMaxPrice.Text = "";
             tbMinPrice.Text = "";
+        }
+
+
+        /// <summary>
+        /// Allows the user to exit from the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
